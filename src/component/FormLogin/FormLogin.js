@@ -4,11 +4,12 @@ import {
   FormErrorMessage,
   FormHelperText,
   Input,
+  Box,
 } from "@chakra-ui/react";
 
 export default function FormLogin() {
   return (
-    <form>
+    <Box as="form" w="50%">
       <FormControl id="email">
         <FormLabel>Email address</FormLabel>
         <Input type="email" />
@@ -21,6 +22,6 @@ export default function FormLogin() {
         <Input type="email" />
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
-    </form>
+    </Box>
   );
 }
