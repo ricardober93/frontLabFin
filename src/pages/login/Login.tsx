@@ -1,6 +1,9 @@
+import React from "react";
 import { Box } from "@chakra-ui/layout";
 import FormLogin from "../../component/FormLogin/FormLogin";
 import MyApp from "../../component/layout/MyApp";
+import { BrandImg } from "../../component/BrandImg/BrandImg"
+
 
 export default function Login() {
   return (
@@ -11,8 +14,8 @@ export default function Login() {
         w="100%"
         d="flex"
         justifyContent="center"
-        alignItems="center"
-      >
+        alignItems="center">
+        <BrandImg />
         <FormLogin />
       </Box>
     </MyApp>
