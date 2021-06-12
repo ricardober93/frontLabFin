@@ -6,30 +6,74 @@ import {
   FormHelperText,
   Input,
   Box,
-  Button
+  Button,
+  Heading,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
+import { useForm, SubmitHandler } from "react-hook-form";
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 export default function FormLogin() {
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
+  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
   return (
-    <Box as="form" w="50%">
-      <FormControl id="email">
-        <FormLabel>Email address</FormLabel>
-        <Input type="email" />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-        <FormErrorMessage> 'Error' </FormErrorMessage>
-      </FormControl>
+    <Box border="1px" borderColor="gray.200" as="section" w="100%" p="4">
+      <VStack as="div" marginY="3" align="stretch">
+        <Heading size="lg">Bienvenido</Heading>
+        <Text fontSize="3xl" color="blue.500">
+          {" "}
+          LabFin{" "}
+        </Text>
+      </VStack>
 
-      <FormControl id="email">
-        <FormLabel>Email address</FormLabel>
-        <Input type="email" />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-      </FormControl>
+      <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <FormControl id="email" isInvalid={errors.email ? true : false}>
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            {...register("email", {
+              required: true,
+              pattern: {
+                value: /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i,
+                message: "Debe ser un correo!",
+              },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.email?.type === "required" && "Es requerido"}
+            {errors.email?.type === "pattern" && errors.email.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl id="email">
-        <Button> Hola backend </Button>
-      </FormControl>
+        <FormControl id="password"  marginY="3">
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            {...register("password", { required: true })}
+          />
+          <FormErrorMessage>
+            {errors.password?.type === "required" && "Es requerido"}
+          </FormErrorMessage>
+        </FormControl>
 
+        <FormControl marginY="3">
+          <Button color="primary" type="submit">
+    
+            Entrar
+          </Button>
+        </FormControl>
+      </form>
     </Box>
   );
 }

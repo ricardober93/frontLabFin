@@ -6,16 +6,19 @@ import { BrandImg } from "../../component/BrandImg/BrandImg"
 
 
 export default function Login() {
+  
   return (
     <MyApp>
       <Box
         as="section"
         minH="90vh"
-        w="100%"
+        w="80%"
+        m="0 auto"
         d="flex"
-        justifyContent="center"
+        gridGap="5"
+        justifyContent={{ base: "center", md: "space-between" }}
         alignItems="center">
-        <BrandImg />
+        <BrandImg  />
         <FormLogin />
       </Box>
     </MyApp>
