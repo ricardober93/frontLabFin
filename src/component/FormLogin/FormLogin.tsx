@@ -3,7 +3,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   Input,
   Box,
   Button,
@@ -12,23 +11,28 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 interface FormValues {
   email: string;
   password: string;
 }
 
 export default function FormLogin() {
+  const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = (data) =>{ 
+    console.log(data)
+    history.push("/app");
+  }
   return (
-    <Box border="1px" borderColor="gray.200" as="section" w="100%" p="4">
+    <Box border="1px" borderColor="gray.200"  borderRadius="3xl" as="section" w="100%" p="4">
       <VStack as="div" marginY="3" align="stretch">
         <Heading size="lg">Bienvenido</Heading>
         <Text fontSize="3xl" color="blue.500">
@@ -39,7 +43,7 @@ export default function FormLogin() {
 
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isInvalid={errors.email ? true : false}>
-          <FormLabel>Email</FormLabel>
+          <FormLabel>Correo ELectronico</FormLabel>
           <Input
             type="email"
             {...register("email", {
@@ -56,8 +60,12 @@ export default function FormLogin() {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl id="password"  marginY="3">
-          <FormLabel>Password</FormLabel>
+        <FormControl
+          id="password"
+          isInvalid={errors.password ? true : false}
+          marginY="3"
+        >
+          <FormLabel>Contraseña</FormLabel>
           <Input
             type="password"
             {...register("password", { required: true })}
@@ -67,12 +75,13 @@ export default function FormLogin() {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl marginY="3">
-          <Button color="primary" type="submit">
-    
-            Entrar
-          </Button>
-        </FormControl>
+        <Box d="flex" align="end">
+          <FormControl marginY="3">
+            <Button color="primary" type="submit">
+              Entrar
+            </Button>
+          </FormControl>
+        </Box>
       </form>
     </Box>
   );
