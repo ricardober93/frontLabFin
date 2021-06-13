@@ -20,6 +20,7 @@ import {
   ArrowRightIcon,
 } from "@chakra-ui/icons";
 import { useTable, usePagination } from "react-table";
+import { MenuTable } from "./MenuTable";
 
 export default function TablePagination({ columns, data }) {
   const {
@@ -50,7 +51,7 @@ export default function TablePagination({ columns, data }) {
   );
   return (
     <>
-      <Table {...getTableProps()}>
+      <Table colorScheme="telegram" {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -67,7 +68,8 @@ export default function TablePagination({ columns, data }) {
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
+                    <Td {...cell.getCellProps()}>{cell.render("Cell")}  <MenuTable cell={cell} />  </Td>
+                   
                   );
                 })}
               </Tr>

@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import TablePagination from "../components/TablePagination";
 
@@ -16,11 +17,11 @@ export default function Baseinicial() {
             accessor: "value",
           },
           {
-            Header: "",
-            accessor: "Acciones",
+            Header: "Acciones",
           },
         ],
       },
+      
     ],
     []
   );
@@ -106,7 +107,9 @@ export default function Baseinicial() {
   return (
     <div>
       Soy Base inicial
+      <Box borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
       <TablePagination columns={columns} data={data} />
+      </Box>
     </div>
   );
 }
