@@ -6,7 +6,6 @@ import {
   Tr,
   Th,
   Td,
-  chakra,
   Box,
   Input,
   Spacer,
@@ -20,7 +19,6 @@ import {
   ArrowRightIcon,
 } from "@chakra-ui/icons";
 import { useTable, usePagination } from "react-table";
-import { MenuTable } from "./MenuTable";
 
 export default function TablePagination({ columns, data }) {
   const {
@@ -45,7 +43,7 @@ export default function TablePagination({ columns, data }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0 , pageSize : 5 },
     },
     usePagination
   );
@@ -56,7 +54,8 @@ export default function TablePagination({ columns, data }) {
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Th {...column.getHeaderProps()}>{column.render("Header")}</Th>
+                  
+                <Th {...column.getHeaderProps()} isNumeric={column?.isNumeric} > {column.render("Header")}</Th>
               ))}
             </Tr>
           ))}
@@ -68,8 +67,7 @@ export default function TablePagination({ columns, data }) {
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <Td {...cell.getCellProps()}>{cell.render("Cell")}  <MenuTable cell={cell} />  </Td>
-                   
+                    <Td {...cell.getCellProps()} isNumeric={cell.column?.isNumeric}> {cell.render("Cell")} </Td>
                   );
                 })}
               </Tr>
@@ -142,7 +140,7 @@ export default function TablePagination({ columns, data }) {
               setPageSize(Number(e.target.value));
             }}
           >
-            {[5, 10, 20].map((pageSize) => (
+            {[5, 10].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 Mostrar {pageSize}
               </option>
