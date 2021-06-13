@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { MenuTable } from "../components/MenuTable";
+import ModalFormBaseinicial from "../components/ModalFormBaseinicial";
 import TablePagination from "../components/TablePagination";
 
 export default function Baseinicial() {
@@ -115,6 +116,9 @@ export default function Baseinicial() {
     return (
         <div>
             Soy Base inicial
+            <Box d="flex" marginY="2" justifyContent="flex-end">
+                <ModalFormBaseinicial />
+            </Box>
             <Box borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
                 <TablePagination columns={columns} data={data} />
             </Box>

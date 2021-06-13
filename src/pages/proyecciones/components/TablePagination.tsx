@@ -49,7 +49,7 @@ export default function TablePagination({ columns, data }) {
   );
   return (
     <>
-      <Table colorScheme="telegram" {...getTableProps()}>
+      <Table colorScheme="teal" {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -61,11 +61,11 @@ export default function TablePagination({ columns, data }) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {page.map((row : any) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+                {row.cells.map((cell:any) => {
                   return (
                     <Td {...cell.getCellProps()} isNumeric={cell.column?.isNumeric}> {cell.render("Cell")} </Td>
                   );

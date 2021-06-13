@@ -3,7 +3,7 @@ import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/rea
 import React from 'react'
 
 export const MenuTable = (cell: any) => {
-    console.log(cell.cell.original.name)
+    // console.log(cell.cell.original.name)
     return (
         <Menu>
             <MenuButton
