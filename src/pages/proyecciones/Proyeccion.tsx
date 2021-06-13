@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import { RoutesApp } from "./components/RoutesApp";
 
 export const Proyeccion = ({ routes }: any) => {
-  console.log(routes);
   return (
     <div>
       {routes.map(( route: any, i: number) => (
