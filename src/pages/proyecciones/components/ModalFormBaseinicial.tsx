@@ -20,7 +20,6 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 export default function ModalFormBaseinicial() {
   // const history = useHistory();
@@ -35,7 +34,6 @@ export default function ModalFormBaseinicial() {
   ]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm({
