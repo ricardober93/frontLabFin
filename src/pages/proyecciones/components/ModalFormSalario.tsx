@@ -15,7 +15,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  CheckboxGroup,
   HStack,
   Checkbox,
 } from "@chakra-ui/react";

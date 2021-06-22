@@ -330,8 +330,7 @@ export default function Baseinicial() {
     );
 
     return (
-        <div>
-            Soy Base inicial
+        <Box as="section">
             <Box d="flex" marginY="2" justifyContent="flex-end">
                 <ModalFormBaseinicial />
             </Box>
@@ -346,6 +345,6 @@ export default function Baseinicial() {
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
                 <TablePagination columns={columnsPatrimonio} data={dataPatrimonio} />
             </Box>
-        </div>
+        </Box>
     );
 }

@@ -11,6 +11,7 @@ import { Proyeccion } from "../pages/proyecciones/Proyeccion";
 import Baseinicial from "pages/proyecciones/pages/Baseinicial";
 import Productos from "pages/proyecciones/pages/Productos";
 import Salario from "pages/proyecciones/pages/Salario";
+import VariablePage from "pages/proyecciones/pages/VariablePage";
 
 
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
                 path: "/app/proyecciones/Salario",
                 name: "salario",
                 component: Salario
+            },
+            {
+                path: "/app/proyecciones/Variable",
+                name: "variable",
+                component: VariablePage
             },
         ]
     },

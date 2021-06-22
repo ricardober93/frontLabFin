@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { MenuTable } from "../components/MenuTable";
 import TablePagination from "../components/TablePagination";
-import ModalFormSalario from "../components/ModalFormSalario";
+import ModalFormVariable from '../components/ModalFormVariable';
 
-export default function Salario() {
-    const columnsSalario = React.useMemo(
+export default function VariablePage() {
+    const columnsVariable= React.useMemo(
         () => [
           {
-            Header: "Salario",
+            Header: "Variable",
             columns: [
               {
                 Header: "Nombre",
@@ -38,7 +38,7 @@ export default function Salario() {
         []
       );
     
-      const dataSalario = React.useMemo(
+      const dataVariable= React.useMemo(
         () => [
           {
             name: "line",
@@ -137,7 +137,7 @@ export default function Salario() {
     return (
         <Box my="5">
         <Flex>
-          <Heading>Salario</Heading>
+          <Heading>Variable</Heading>
           <Spacer />
           <Box>
             <Flex gridGap="5">
@@ -149,7 +149,7 @@ export default function Salario() {
               >
                 Proyeccion
               </Button>
-              <ModalFormSalario />
+              <ModalFormVariable />
             </Flex>
           </Box>
         </Flex>
@@ -160,7 +160,7 @@ export default function Salario() {
           overflow="hidden"
           boxShadow="base"
         >
-          <TablePagination columns={columnsSalario} data={dataSalario} />
+          <TablePagination columns={columnsVariable} data={dataVariable} />
         </Box>
       </Box>
     )
