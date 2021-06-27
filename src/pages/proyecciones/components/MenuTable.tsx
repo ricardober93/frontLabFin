@@ -1,6 +1,7 @@
 import {  EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import React from 'react'
+import ModalDeleteActivo from './ModalDeleteActivo'
 import ModalEditActivos from './ModalEditActivos'
 
 export const MenuTable = (cell: any) => {
@@ -15,9 +16,7 @@ export const MenuTable = (cell: any) => {
             />
             <MenuList>
                  <ModalEditActivos  data={data}/>
-                <MenuItem icon={<DeleteIcon color="red.400" />}>
-                    Eliminar
-                </MenuItem>
+                <ModalDeleteActivo data={data} />
             </MenuList>
         </Menu>
     )
