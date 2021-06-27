@@ -29,7 +29,7 @@ export default function FormLogin() {
   });
   const onSubmit: SubmitHandler<FormValues> = (data) =>{ 
     console.log(data)
-    history.push("/app");
+    history.push("/app/proyecciones/baseInicial");
   }
   return (
     <Box border="1px" borderColor="gray.200"  borderRadius="3xl" as="section" w="100%" p="4">

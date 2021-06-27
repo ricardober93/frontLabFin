@@ -53,9 +53,9 @@ export default function TablePagination({ columns, data }) {
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+              {headerGroup?.headers.map((column) => (
                   
-                <Th {...column.getHeaderProps()} isNumeric={column?.isNumeric} > {column.render("Header")}</Th>
+                <Th {...column.getHeaderProps()} isNumeric={column?.isNumeric} > {column?.render("Header")}</Th>
               ))}
             </Tr>
           ))}
