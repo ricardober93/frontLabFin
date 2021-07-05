@@ -64,10 +64,6 @@ export default function Productos() {
         rateRaise:45,
         rateOfSale:23,
         rateOfPurchases:34,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
        },
       {
         name: "hola",
