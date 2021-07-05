@@ -1,8 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { MenuTable } from "../components/MenuTable";
-import ModalFormBaseinicial from "../components/ModalFormBaseinicial";
+import ModalFormBaseinicial from "../components/ModalForm/ModalFormBaseinicial";
 import TablePagination from "../components/TablePagination";
+import { MenuTable } from "../components/modalsMenuActive/MenuTable";
+import { MenuTablePasive } from "../components/modalsMenuPasive/MenuTablePasive";
+import { MenuTablePatrimonio } from "../components/modalsMenuPatrimonio/MenuTablePatrimonio";
 
 export default function Baseinicial() {
     const columnsActivos = React.useMemo(
@@ -133,7 +135,7 @@ export default function Baseinicial() {
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTable  cell={row} />
+                            <MenuTablePasive  cell={row} />
                         ),
                     },
                 ],
@@ -241,7 +243,7 @@ export default function Baseinicial() {
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTable  cell={row} />
+                            <MenuTablePatrimonio  cell={row} />
                         ),
                     },
                 ],
