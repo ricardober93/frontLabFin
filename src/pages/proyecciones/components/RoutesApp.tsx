@@ -1,11 +1,12 @@
-import { Link } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 export const RoutesApp = ({ route }: any) => {
   return (
-    <Link color="teal.400" p="1">
+    <Box color="teal.400" p="1">
       <NavLink
+
         to={route?.path}
         activeStyle={{
           fontWeight: "bold",
@@ -14,6 +15,6 @@ export const RoutesApp = ({ route }: any) => {
       >
         {route?.name}
       </NavLink>
-      </Link>
+      </Box>
   );
 };

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { MenuTable } from "../components/MenuTable";
-import TablePagination from "../components/TablePagination";
-import ModalFormVariable from '../components/ModalFormVariable';
+import { MenuTable } from "../components/modalsMenuActive/MenuTable";
+import TablePagination from "../components/TablePaginations/TablePagination";
+import ModalFormVariable from '../components/ModalForm/ModalFormVariable';
 
 export default function VariablePage() {
     const columnsVariable= React.useMemo(

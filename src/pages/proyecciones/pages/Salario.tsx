@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { MenuTable } from "../components/MenuTable";
-import TablePagination from "../components/TablePagination";
-import ModalFormSalario from "../components/ModalFormSalario";
+import ModalFormSalario from "../components/ModalForm/ModalFormSalario";
+import { MenuTableSalario } from "../components/modalsMenuSalario/MenuTableSalario";
+import TablePaginationSalario from "../components/TablePaginations/TablePaginationSalarios";
 
 export default function Salario() {
     const columnsSalario = React.useMemo(
@@ -15,12 +15,28 @@ export default function Salario() {
                 accessor: "name",
               },
               {
-                Header: "Cantidad",
-                accessor: "quantity",
+                Header: "Salario",
+                accessor: "salary",
               },
               {
-                Header: "Valor",
-                accessor: "value",
+                Header: "Dias Trabajados",
+                accessor: "dayWorks",
+              },
+              {
+                Header: "% de Pension",
+                accessor: "pension",
+              },
+              {
+                Header: "% de Salud",
+                accessor: "salud",
+              },
+              {
+                Header: "Aux. Transporte",
+                accessor: "transport",
+              },
+              {
+                Header: "Comision",
+                accessor: "comision",
               },
               {
                 Header: "Acciones",
@@ -29,7 +45,7 @@ export default function Salario() {
                   // Use Cell to render an expander for each row.
                   // We can use the getToggleRowExpandedProps prop-getter
                   // to build the expander.
-                  <MenuTable cell={row} />
+                  <MenuTableSalario cell={row} />
                 ),
               },
             ],
@@ -42,93 +58,165 @@ export default function Salario() {
         () => [
           {
             name: "line",
-            quantity: "22",
-            value: "field",
+            salary: "22",
+            dayWorks: "field",
+            pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "hola",
-            quantity: "20",
-            value: "mundo",
+            salary: "20",
+            dayWorks: "mundo",
+            pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "sofia",
-            quantity: "25",
-            value: "Marcena",
+            salary: "25",
+            dayWorks: "Marcena",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Doña",
-            quantity: "28",
-            value: "Lau",
+            salary: "28",
+            dayWorks: "Lau",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Romero",
-            quantity: "26",
-            value: "Homero",
+            salary: "26",
+            dayWorks: "Homero",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Solo",
-            quantity: "25",
-            value: "on the dark",
+            salary: "25",
+            dayWorks: "on the dark",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "line",
-            quantity: "15",
-            value: "field",
+            salary: "15",
+            dayWorks: "field",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "hola",
-            quantity: "12",
-            value: "mundo",
+            salary: "12",
+            dayWorks: "mundo",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "sofia",
-            quantity: "7",
-            value: "Marcena",
+            salary: "7",
+            dayWorks: "Marcena",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Doña",
-            quantity: "2",
-            value: "Lau",
+            salary: "2",
+            dayWorks: "Lau",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Romero",
-            quantity: "1",
-            value: "Homero",
+            salary: "1",
+            dayWorks: "Homero",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Solo",
-            quantity: "20",
-            value: "on the dark",
+            salary: "20",
+            dayWorks: "on the dark",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "line",
-            quantity: "1",
-            value: "field",
+            salary: "1",
+            dayWorks: "field",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "hola",
-            quantity: "2",
-            value: "mundo",
+            salary: "2",
+            dayWorks: "mundo",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "sofia",
-            quantity: "30",
-            value: "Marcena",
+            salary: "30",
+            dayWorks: "Marcena",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Doña",
-            quantity: "100",
-            value: "Lau",
+            salary: "100",
+            dayWorks: "Lau",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Romero",
-            quantity: "20",
-            value: "Homero",
+            salary: "20",
+            dayWorks: "Homero",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
           {
             name: "Solo",
-            quantity: "100",
-            value: "on the dark",
+            salary: "100",
+            dayWorks: "on the dark",
+             pension: 24,
+            salud:24,
+            transport: true,
+            comision:true,
           },
         ],
         []
@@ -160,7 +248,7 @@ export default function Salario() {
           overflow="hidden"
           boxShadow="base"
         >
-          <TablePagination columns={columnsSalario} data={dataSalario} />
+          <TablePaginationSalario columns={columnsSalario} data={dataSalario} />
         </Box>
       </Box>
     )

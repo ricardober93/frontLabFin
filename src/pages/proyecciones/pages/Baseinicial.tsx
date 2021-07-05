@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import ModalFormBaseinicial from "../components/ModalForm/ModalFormBaseinicial";
-import TablePagination from "../components/TablePagination";
+import TablePagination from "../components/TablePaginations/TablePagination";
 import { MenuTable } from "../components/modalsMenuActive/MenuTable";
 import { MenuTablePasive } from "../components/modalsMenuPasive/MenuTablePasive";
 import { MenuTablePatrimonio } from "../components/modalsMenuPatrimonio/MenuTablePatrimonio";

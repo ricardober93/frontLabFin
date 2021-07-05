@@ -1,5 +1,5 @@
-import {  EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
+import { IconButton, Menu, MenuButton, MenuList } from '@chakra-ui/react'
 import React from 'react'
 import ModalDeleteActivo from './ModalDeleteActivo'
 import ModalEditActivos from './ModalEditActivos'
