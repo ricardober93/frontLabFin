@@ -1,17 +1,28 @@
-import { Box, Heading, VStack, Text, FormControl, FormLabel, Input, FormErrorMessage, Button } from '@chakra-ui/react';
-import { registerService } from 'pages/register/register.service';
-import React from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Heading,
+  VStack,
+  Text,
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Button,
+  HStack,
+} from "@chakra-ui/react";
+import { registerService } from "pages/register/register.service";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 interface FormValues {
-    email: string;
-    password: string;
-  }
-  
+  email: string;
+  password: string;
+}
 
 export default function FormRegister() {
-    const history = useHistory();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -20,75 +31,81 @@ export default function FormRegister() {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = async (data) =>{ 
-    console.log(data)
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(data);
 
     try {
       const res = await registerService(data.email, data.password);
-      console.log(res)
-      if(res.token){
-        localStorage.setItem('token', res.token)
-        history.push("/app/proyecciones/baseInicial");
+      console.log(res);
+      if (res.status === 200) {
+        history.push("/login");
       }
-    } catch (error) {
-      
-    }
-
-   
-  }
-    return (
-        <Box border="1px" borderColor="gray.200"  borderRadius="3xl" as="section" w="100%" p="4">
-        <VStack as="div" marginY="3" align="stretch">
-          <Heading size="lg">Bienvenido</Heading>
-          <Text fontSize="3xl" color="blue.500">
-            {" "}
-            LabFin{" "}
-          </Text>
-        </VStack>
-  
-        <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-          <FormControl id="email" isInvalid={errors.email ? true : false}>
-            <FormLabel>Correo ELectronico</FormLabel>
-            <Input
-              type="email"
-              {...register("email", {
-                required: true,
-                pattern: {
-                  value: /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i,
-                  message: "Debe ser un correo!",
-                },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.email?.type === "required" && "Es requerido"}
-              {errors.email?.type === "pattern" && errors.email.message}
-            </FormErrorMessage>
-          </FormControl>
-  
-          <FormControl
-            id="password"
-            isInvalid={errors.password ? true : false}
-            marginY="3"
-          >
-            <FormLabel>Contraseña</FormLabel>
-            <Input
-              type="password"
-              {...register("password", { required: true })}
-            />
-            <FormErrorMessage>
-              {errors.password?.type === "required" && "Es requerido"}
-            </FormErrorMessage>
-          </FormControl>
-  
-          <Box d="flex" align="end">
-            <FormControl marginY="3">
-              <Button color="primary" type="submit">
-                Entrar
-              </Button>
-            </FormControl>
+    } catch (error) {}
+  };
+  return (
+    <Box
+      border="1px"
+      borderColor="gray.200"
+      borderRadius="3xl"
+      as="section"
+      w="100%"
+      p="4"
+    >
+      <VStack as="div" marginY="3" align="stretch">
+        <HStack>
+          <Box cursor="pointer" onClick={() => history.goBack()}>
+            <ArrowBackIcon w={8} h={8} />
           </Box>
-        </form>
-      </Box>
+          <Heading size="lg">Registra tu cuenta</Heading>
+        </HStack>
 
-    )
+        <Text fontSize="3xl" color="blue.500">
+          LabFin
+        </Text>
+      </VStack>
+
+      <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <FormControl id="email" isInvalid={errors.email ? true : false}>
+          <FormLabel>Correo ELectronico</FormLabel>
+          <Input
+            type="email"
+            {...register("email", {
+              required: true,
+              pattern: {
+                value: /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i,
+                message: "Debe ser un correo!",
+              },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.email?.type === "required" && "Es requerido"}
+            {errors.email?.type === "pattern" && errors.email.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          id="password"
+          isInvalid={errors.password ? true : false}
+          marginY="3"
+        >
+          <FormLabel>Contraseña</FormLabel>
+          <Input
+            type="password"
+            {...register("password", { required: true })}
+          />
+          <FormErrorMessage>
+            {errors.password?.type === "required" && "Es requerido"}
+          </FormErrorMessage>
+        </FormControl>
+
+        <Box d="flex" align="end">
+          <FormControl marginY="3">
+            <Button colorScheme="facebook" type="submit">
+              Crear cuenta
+            </Button>
+          </FormControl>
+        </Box>
+      </form>
+    </Box>
+  );
 }
