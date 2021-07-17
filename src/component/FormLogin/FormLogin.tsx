@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { loginService } from "pages/login/login.service";
 interface FormValues {
   email: string;
   password: string;
@@ -27,9 +28,21 @@ export default function FormLogin() {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) =>{ 
+  const onSubmit: SubmitHandler<FormValues> = async (data) =>{ 
     console.log(data)
-    history.push("/app/proyecciones/baseInicial");
+
+    try {
+      const res = await loginService(data.email, data.password);
+      console.log(res)
+      if(res.token){
+        localStorage.setItem('token', res.token)
+        history.push("/app/proyecciones/baseInicial");
+      }
+    } catch (error) {
+      
+    }
+
+   
   }
   return (
     <Box border="1px" borderColor="gray.200"  borderRadius="3xl" as="section" w="100%" p="4">

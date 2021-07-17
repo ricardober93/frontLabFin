@@ -6,7 +6,7 @@ import { BrandImg } from "../../component/BrandImg/BrandImg"
 
 
 export default function Login() {
-  
+
   return (
     <MyApp>
       <Box
@@ -18,7 +18,7 @@ export default function Login() {
         gridGap="5"
         justifyContent={{ base: "center", md: "space-between" }}
         alignItems="center">
-        <BrandImg  />
+        <BrandImg />
         <FormLogin />
       </Box>
     </MyApp>
