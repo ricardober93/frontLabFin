@@ -24,4 +24,5 @@ export const App = () => {
         </ChakraProvider>
       </Router>
     </UserContext.Provider>
-});
+  );
+}
