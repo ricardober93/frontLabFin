@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -19,6 +20,7 @@ interface FormValues {
 }
 
 export default function FormLogin() {
+  const toast = useToast()
   const history = useHistory();
   const {
     register,
@@ -28,24 +30,55 @@ export default function FormLogin() {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = async (data) =>{ 
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data)
 
     try {
       const res = await loginService(data.email, data.password);
       console.log(res)
-      if(res.token){
+
+      if (res.contains('400')) {
+        setTimeout(() => {
+          toast({
+            title: "Error ",
+            description: 'revisa las credenciales',
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          })
+      }, 100);
+      }
+
+      if (res.token) {
+        setTimeout(() => {
+            toast({
+              title: "Cuenta logueado con exito",
+              description: 'ha iniciado sesion' + res.user.email,
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            })
+        }, 100);
         localStorage.setItem('token', res.token)
         history.push("/app/proyecciones/baseInicial");
       }
     } catch (error) {
-      
+      setTimeout(() => {
+
+        toast({
+          title: "Problemas con las credenciales.",
+          description: "No se ha podido loguear.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        })
+      }, 200);
     }
 
-   
+
   }
   return (
-    <Box border="1px" borderColor="gray.200"  borderRadius="3xl" as="section" w="100%" p="4">
+    <Box border="1px" borderColor="gray.200" borderRadius="3xl" as="section" w="100%" p="4">
       <VStack as="div" marginY="3" align="stretch">
         <Heading size="lg">Bienvenido</Heading>
         <Text fontSize="3xl" color="blue.500">
