@@ -36,35 +36,22 @@ export default function FormLogin() {
     try {
       const res = await loginService(data.email, data.password);
       console.log(res)
-
-      if (res.contains('400')) {
-        setTimeout(() => {
-          toast({
-            title: "Error ",
-            description: 'revisa las credenciales',
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          })
-      }, 100);
-      }
-
-      if (res.token) {
-        setTimeout(() => {
-            toast({
-              title: "Cuenta logueado con exito",
-              description: 'ha iniciado sesion' + res.user.email,
-              status: "success",
-              duration: 9000,
-              isClosable: true,
-            })
-        }, 100);
-        localStorage.setItem('token', res.token)
-        history.push("/app/proyecciones/baseInicial");
-      }
-    } catch (error) {
+      
       setTimeout(() => {
+        toast({
+          title: "Cuenta logueado con exito",
+          description: 'ha iniciado sesion' + res.user.email,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+      }, 100);
+      localStorage.setItem('token', res.token.token)
+      history.push("/app/proyecciones/baseInicial");
 
+    } catch (error) {
+      console.log(error)
+      setTimeout(() => {
         toast({
           title: "Problemas con las credenciales.",
           description: "No se ha podido loguear.",
