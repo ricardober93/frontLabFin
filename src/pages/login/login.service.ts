@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const loginService = async (email: string, password: string) => {
   const options: AxiosRequestConfig = {
@@ -10,7 +10,7 @@ export const loginService = async (email: string, password: string) => {
   try {
     const response = await axios.request(options);
     return response.data;
-  } catch (error) {
+  } catch (error ) {
     return error;
   }
 };
