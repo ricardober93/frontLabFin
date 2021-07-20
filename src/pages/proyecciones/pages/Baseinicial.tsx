@@ -1,12 +1,30 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
+import { Box, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import ModalFormBaseinicial from "../components/ModalForm/ModalFormBaseinicial";
 import TablePagination from "../components/TablePaginations/TablePagination";
 import { MenuTable } from "../components/modalsMenuActive/MenuTable";
 import { MenuTablePasive } from "../components/modalsMenuPasive/MenuTablePasive";
 import { MenuTablePatrimonio } from "../components/modalsMenuPatrimonio/MenuTablePatrimonio";
+import { getPatrimonio } from "../servicios/patrominio.service";
+import { getActivo } from "../servicios/activo.service";
+import { getPasivo } from "../servicios/pasivo.service";
 
 export default function Baseinicial() {
+
+    const [patrimonio, setPatrimonio] = useState([]);
+    const [activos, setActivo] = useState([]);
+    const [pasivos, setPasivos] = useState([]);
+
+    const [errorPatrimonio, setErrorPatrimonio] = useState();
+    const [errorActivo, setErrorActivo] = useState();
+    const [errorPasivo, setErrorPasivo] = useState();
+    useEffect(() => {
+        getPatrimonio().then((res) => setPatrimonio(res)).catch((err) => setErrorPatrimonio(err));
+        getActivo().then((res) => setActivo(res)).catch((err) => setErrorActivo(err))
+        getPasivo().then((res) => setPasivos(res)).catch((err) => setErrorPasivo(err))
+    }, [])
+
+
     const columnsActivos = React.useMemo(
         () => [
             {
@@ -18,16 +36,16 @@ export default function Baseinicial() {
                     },
                     {
                         Header: "Valor",
-                        accessor: "value",
+                        accessor: "valor",
                     },
                     {
                         Header: "Acciones",
-                        isNumeric:true,
-                        Cell: ({ row, isNumeric=true }) => (
+                        isNumeric: true,
+                        Cell: ({ row, isNumeric = true }) => (
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTable  cell={row} />
+                            <MenuTable cell={row} />
                         ),
                     },
                 ],
@@ -37,84 +55,10 @@ export default function Baseinicial() {
         []
     );
 
-    const dataActivos = React.useMemo(
-        () => [
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-        ],
+/*     const dataActivos =  React.useMemo(
+        () =>  [...activos],
         []
-    );
-
+    ) ; */
     const columnsPasivos = React.useMemo(
         () => [
             {
@@ -126,16 +70,16 @@ export default function Baseinicial() {
                     },
                     {
                         Header: "Valor",
-                        accessor: "value",
+                        accessor: "valor",
                     },
                     {
                         Header: "Acciones",
-                        isNumeric:true,
-                        Cell: ({ row, isNumeric=true }) => (
+                        isNumeric: true,
+                        Cell: ({ row, isNumeric = true }) => (
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTablePasive  cell={row} />
+                            <MenuTablePasive cell={row} />
                         ),
                     },
                 ],
@@ -145,83 +89,10 @@ export default function Baseinicial() {
         []
     );
 
-    const dataPasivos = React.useMemo(
-        () => [
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-        ],
+/*     const dataPasivos = React.useMemo(
+        () => pasivos.length > 0 ? [...pasivos] : [],
         []
-    );
+    ); */
 
     const columnsPatrimonio = React.useMemo(
         () => [
@@ -234,16 +105,16 @@ export default function Baseinicial() {
                     },
                     {
                         Header: "Valor",
-                        accessor: "value",
+                        accessor: "valor",
                     },
                     {
                         Header: "Acciones",
-                        isNumeric:true,
-                        Cell: ({ row, isNumeric=true }) => (
+                        isNumeric: true,
+                        Cell: ({ row, isNumeric = true }) => (
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTablePatrimonio  cell={row} />
+                            <MenuTablePatrimonio cell={row} />
                         ),
                     },
                 ],
@@ -253,83 +124,11 @@ export default function Baseinicial() {
         []
     );
 
-    const dataPatrimonio = React.useMemo(
-        () => [
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-            {
-                name: "line",
-                value: "field",
-            },
-            {
-                name: "hola",
-                value: "mundo",
-            },
-            {
-                name: "sofia",
-                value: "Marcena",
-            },
-            {
-                name: "Doña",
-                value: "Lau",
-            },
-            {
-                name: "Romero",
-                value: "Homero",
-            },
-            {
-                name: "Solo",
-                value: "on the dark",
-            },
-        ],
+ /*    const dataPatrimonio = React.useMemo(
+        () => patrimonio.length >  0 ? [...patrimonio] : [],
         []
-    );
+    ); */
+
 
     return (
         <Box as="section">
@@ -337,15 +136,17 @@ export default function Baseinicial() {
                 <ModalFormBaseinicial />
             </Box>
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                <TablePagination columns={columnsActivos} data={dataActivos} />
+                {activos.length > 0 ? <TablePagination columns={columnsActivos} data={activos} /> : <Text align="center">No tiene activos</Text>}
+
             </Box>
 
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                <TablePagination columns={columnsPasivos} data={dataPasivos} />
+                {pasivos.length > 0 ? <TablePagination columns={columnsPasivos} data={pasivos} /> : <Text align="center">No tiene patrimonio</Text>}
+
             </Box>
 
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                <TablePagination columns={columnsPatrimonio} data={dataPatrimonio} />
+                {patrimonio.length > 0 ? <TablePagination columns={columnsPatrimonio} data={patrimonio} /> : <Text align="center">No tiene patrimonio</Text>}
             </Box>
         </Box>
     );
