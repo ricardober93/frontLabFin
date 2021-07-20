@@ -24,13 +24,13 @@ import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 export default function ModalFormBaseinicial() {
   // const history = useHistory();
   const [ActivosList, setActivosList] = useState([
-    { nameOfAvtive: "", valueOfAvtive: "" },
+    { name: "", valor: "" },
   ]);
    const [PasivosList, setPasivosList] = useState([
-    { nameOfPasive: "", valueOfPasive: "" },
+    { name: "", valor: "" },
   ]);
   const [PatrimonioList, setPatrimonioList] = useState([
-    { nameOfPatrimonio: "", valueOfPatrimonio: "" },
+    { name: "", valor: "" },
   ]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
