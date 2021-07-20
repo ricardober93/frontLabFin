@@ -18,20 +18,37 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-export default function ModalFormBaseinicial() {
+import { createBalance } from "pages/proyecciones/servicios/createBalance.service";
+import { Iactivos, Ipasivos, Ipatrimonio } from "pages/proyecciones/types/type";
+
+
+
+
+
+export default function ModalFormBaseinicial({getBaseInicial}) {
+  const toast = useToast()
   // const history = useHistory();
-  const [ActivosList, setActivosList] = useState([
-    { name: "", valor: "" },
+  const [ActivosList, setActivosList] = useState<Iactivos[]>([
+    { name: "", valor: 0 },
   ]);
-   const [PasivosList, setPasivosList] = useState([
-    { name: "", valor: "" },
+  const [PasivosList, setPasivosList] = useState<Ipasivos[]>([
+    { name: "", valor: 0 },
   ]);
-  const [PatrimonioList, setPatrimonioList] = useState([
-    { name: "", valor: "" },
+  const [PatrimonioList, setPatrimonioList] = useState<Ipatrimonio[]>([
+    { name: "", valor: 0 },
   ]);
+
+  const [error, setError] = useState("");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     handleSubmit,
@@ -40,22 +57,52 @@ export default function ModalFormBaseinicial() {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit = handleSubmit((data: any) => {
+  const onSubmit = handleSubmit(async (d) => {
     console.log(ActivosList);
     console.log(PasivosList);
     console.log(PatrimonioList);
+
+    try {
+      const res = await createBalance(ActivosList, PasivosList, PatrimonioList);
+      console.log(res)
+      if (res.status === "error") {
+        setError(res.message)
+        return
+      }
+
+      if (res.status === "good") {
+        onClose()
+        getBaseInicial()
+        toast({
+          title: "Se ha creado la base inicial",
+          description: res.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+
+    } catch (error) {
+      toast({
+        title: "Se hay un  problema con el servidor",
+        description: error,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+    }
   });
 
   const AddClickActivos = () => {
-    setActivosList([...ActivosList, { nameOfAvtive: "", valueOfAvtive: "" }]);
+    setActivosList([...ActivosList, { name: "", valor: 0 }]);
   };
 
   const AddClickPasivos = () => {
-    setPasivosList([...PasivosList, { nameOfPasive: "", valueOfPasive: "" }]);
+    setPasivosList([...PasivosList, { name: "", valor: 0 }]);
   };
 
   const AddClickPatrimonio = () => {
-    setPatrimonioList([...PatrimonioList, { nameOfPatrimonio: "", valueOfPatrimonio: "" }]);
+    setPatrimonioList([...PatrimonioList, { name: "", valor: 0 }]);
   };
 
 
@@ -77,25 +124,25 @@ export default function ModalFormBaseinicial() {
     setPatrimonioList(list);
   };
 
-  const InputChangeActivos = (e, index:number) => {
+  const InputChangeActivos = (e, index: number) => {
     const { name, value } = e.target;
-    const list:any = [...ActivosList];
+    const list: any = [...ActivosList];
     list[index][name] = value;
     setActivosList(list);
   };
 
 
-  const InputChangePasivos = (e, index:number) => {
+  const InputChangePasivos = (e, index: number) => {
     const { name, value } = e.target;
-    const list:any = [...PasivosList];
+    const list: any = [...PasivosList];
     list[index][name] = value;
     setPasivosList(list);
   };
 
-  
-  const InputChangePatrimonio = (e, index:number) => {
+
+  const InputChangePatrimonio = (e, index: number) => {
     const { name, value } = e.target;
-    const list:any = [...PatrimonioList];
+    const list: any = [...PatrimonioList];
     list[index][name] = value;
     setPatrimonioList(list);
   };
@@ -125,34 +172,34 @@ export default function ModalFormBaseinicial() {
                     <Flex gridGap="5">
                       <Box w="40%">
                         <FormControl
-                          id="nameOfAvtive"
-                          isInvalid={errors.nameOfAvtive ? true : false}
+                          id="name"
+                          isInvalid={errors.name ? true : false}
                         >
                           <FormLabel>Nombre del Activo</FormLabel>
                           <Input type="text"
-                          name="nameOfAvtive"
+                            name="name"
                             onChange={e => InputChangeActivos(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.nameOfAvtive?.type === "required" &&
+                            {errors.name?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
                       </Box>
                       <Box w="40%">
                         <FormControl
-                          id="valueOfAvtive"
-                          isInvalid={errors.valueOfAvtive ? true : false}
+                          id="valor"
+                          isInvalid={errors.valor ? true : false}
                         >
                           <FormLabel>Valor del Activo</FormLabel>
                           <Input
-                            type="number"
+                            type='number'
                             min="0.00"
-                            name="valueOfAvtive"
+                            name="valor"
                             onChange={e => InputChangeActivos(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.valueOfAvtive?.type === "required" &&
+                            {errors.valor?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
@@ -187,7 +234,7 @@ export default function ModalFormBaseinicial() {
               <Heading mt="4" size="sm">
                 Pasivos
               </Heading>
-              <Divider my="3"/>
+              <Divider my="3" />
 
               {PasivosList.map((_, i) => {
                 return (
@@ -195,33 +242,33 @@ export default function ModalFormBaseinicial() {
                     <Flex gridGap="5">
                       <Box w="40%">
                         <FormControl
-                          isInvalid={errors.nameOfPasive ? true : false}
+                          isInvalid={errors.name ? true : false}
                         >
                           <FormLabel>Nombre del Pasivo</FormLabel>
                           <Input type="text"
-                          name="nameOfPasive"
+                            name="name"
                             onChange={e => InputChangePasivos(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.nameOfPasive?.type === "required" &&
+                            {errors.name?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
                       </Box>
                       <Box w="40%">
                         <FormControl
-                          id="valueOfPasive"
-                          isInvalid={errors.valueOfPasive ? true : false}
+                          id="valor"
+                          isInvalid={errors.valor ? true : false}
                         >
                           <FormLabel>Valor del Pasivo</FormLabel>
                           <Input
                             type="number"
                             min="0.00"
-                            name="valueOfPasive"
+                            name="valor"
                             onChange={e => InputChangePasivos(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.valueOfPasive?.type === "required" &&
+                            {errors.valor?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
@@ -256,40 +303,40 @@ export default function ModalFormBaseinicial() {
               <Heading mt="4" size="sm">
                 Patrominio
               </Heading>
-              <Divider my="3"/>
+              <Divider my="3" />
               {PatrimonioList.map((_, i) => {
                 return (
                   <Fragment key={i}>
                     <Flex gridGap="5">
                       <Box w="40%">
                         <FormControl
-                          isInvalid={errors.nameOfPatrimonio ? true : false}
+                          isInvalid={errors.name ? true : false}
                         >
                           <FormLabel>Nombre del Patrominio</FormLabel>
                           <Input type="text"
-                          name="nameOfPatrimonio"
+                            name="name"
                             onChange={e => InputChangePatrimonio(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.nameOfPasive?.type === "required" &&
+                            {errors.name?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
                       </Box>
                       <Box w="40%">
                         <FormControl
-                          id="valueOfPatrimonio"
-                          isInvalid={errors.valueOfPasive ? true : false}
+                          id="valor"
+                          isInvalid={errors.valor ? true : false}
                         >
                           <FormLabel>Valor del Patrominio</FormLabel>
                           <Input
                             type="number"
                             min="0.00"
-                            name="valueOfPatrimonio"
+                            name="valor"
                             onChange={e => InputChangePatrimonio(e, i)}
                           />
                           <FormErrorMessage>
-                            {errors.valueOfPasive?.type === "required" &&
+                            {errors.valor?.type === "required" &&
                               "Es requerido"}
                           </FormErrorMessage>
                         </FormControl>
@@ -321,6 +368,12 @@ export default function ModalFormBaseinicial() {
                 );
               })}
             </ModalBody>
+            {error.length > 0 && (<Alert status="error">
+              <AlertIcon />
+              <AlertTitle mr={2}>Error al crear la base inicial</AlertTitle>
+              <AlertDescription> {error} </AlertDescription>
+              <CloseButton onClick={() => setError("")} position="absolute" right="8px" top="8px" />
+            </Alert>)}
             <ModalFooter>
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
