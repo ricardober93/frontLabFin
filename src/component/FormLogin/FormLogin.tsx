@@ -36,11 +36,23 @@ export default function FormLogin() {
     try {
       const res = await loginService(data.email, data.password);
       console.log(res)
+
+      if(res.user == null){
+        toast({
+          title: "Problemas con las credenciales.",
+          description: "No se ha podido loguear.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        })
+        return
+      }
+
       
       setTimeout(() => {
         toast({
           title: "Cuenta logueado con exito",
-          description: 'ha iniciado sesion' + res.user.email,
+          description: 'ha iniciado sesion ' + res.user.email,
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -78,6 +90,7 @@ export default function FormLogin() {
         <FormControl id="email" isInvalid={errors.email ? true : false}>
           <FormLabel>Correo ELectronico</FormLabel>
           <Input
+          autoComplete="off"
             type="email"
             {...register("email", {
               required: true,
@@ -94,6 +107,7 @@ export default function FormLogin() {
         </FormControl>
 
         <FormControl
+        autoComplete="off"
           id="password"
           isInvalid={errors.password ? true : false}
           marginY="3"
