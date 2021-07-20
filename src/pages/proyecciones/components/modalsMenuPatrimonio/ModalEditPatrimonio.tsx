@@ -37,7 +37,7 @@ export default function ModalEditPatrimonio({data}) {
           <FormLabel>Valor</FormLabel>
           <Input
             type="text"
-            defaultValue={data.value}
+            defaultValue={data.valor}
           />
         </FormControl>
 
