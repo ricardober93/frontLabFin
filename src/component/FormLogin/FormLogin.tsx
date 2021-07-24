@@ -20,7 +20,7 @@ interface FormValues {
 }
 
 export default function FormLogin() {
-  const toast = useToast()
+  const toast = useToast();
   const history = useHistory();
   const {
     register,
@@ -31,38 +31,36 @@ export default function FormLogin() {
     reValidateMode: "onChange",
   });
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data)
+    console.log(data);
 
     try {
       const res = await loginService(data.email, data.password);
-      console.log(res)
-
-      if(res.user == null){
+      if (res.status == 400) {
         toast({
           title: "Problemas con las credenciales.",
           description: "No se ha podido loguear.",
           status: "error",
           duration: 9000,
           isClosable: true,
-        })
-        return
+        });
+        return;
       }
 
-      
-      setTimeout(() => {
-        toast({
-          title: "Cuenta logueado con exito",
-          description: 'ha iniciado sesion ' + res.user.email,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        })
-      }, 100);
-      localStorage.setItem('token', res.token.token)
-      history.push("/app/proyecciones/baseInicial");
-
+      if (res.status == 200) {
+        setTimeout(() => {
+          toast({
+            title: "Cuenta logueado con exito",
+            description: "ha iniciado sesion " + res.data.user.email,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        }, 100);
+        localStorage.setItem("token", res.data.token.token);
+        history.push("/app/proyecciones/baseInicial");
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setTimeout(() => {
         toast({
           title: "Problemas con las credenciales.",
@@ -70,14 +68,19 @@ export default function FormLogin() {
           status: "error",
           duration: 9000,
           isClosable: true,
-        })
+        });
       }, 200);
     }
-
-
-  }
+  };
   return (
-    <Box border="1px" borderColor="gray.200" borderRadius="3xl" as="section" w="100%" p="4">
+    <Box
+      border="1px"
+      borderColor="gray.200"
+      borderRadius="3xl"
+      as="section"
+      w="100%"
+      p="4"
+    >
       <VStack as="div" marginY="3" align="stretch">
         <Heading size="lg">Bienvenido</Heading>
         <Text fontSize="3xl" color="blue.500">
@@ -90,7 +93,7 @@ export default function FormLogin() {
         <FormControl id="email" isInvalid={errors.email ? true : false}>
           <FormLabel>Correo ELectronico</FormLabel>
           <Input
-          autoComplete="off"
+            autoComplete="off"
             type="email"
             {...register("email", {
               required: true,
@@ -107,7 +110,7 @@ export default function FormLogin() {
         </FormControl>
 
         <FormControl
-        autoComplete="off"
+          autoComplete="off"
           id="password"
           isInvalid={errors.password ? true : false}
           marginY="3"
