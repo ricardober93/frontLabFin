@@ -22,10 +22,30 @@ export default function Baseinicial() {
         getBaseInicial()
     }, [])
 
+    const getAllActivo = () => {
+        getActivo("/proyeccion/activo")
+            .then((res) => setActivo(res.data))
+            .catch((err) => setErrorActivo(err))
+       
+    }
+
+    const getAllPasivo = () => {
+        getPasivo("/proyeccion/pasivo")
+        .then((res) => setPasivos(res.data))
+        .catch((err) => setErrorPasivo(err))
+    }
+    
+    const getAllPatrimonio = () => {
+        getPatrimonio("/proyeccion/patrimonio")
+        .then((res) => setPatrimonio(res.data))
+        .catch((err) => setErrorPatrimonio(err));
+
+    }
+
     const getBaseInicial = () => {
-        getPatrimonio().then((res) => setPatrimonio(res)).catch((err) => setErrorPatrimonio(err));
-        getActivo().then((res) => setActivo(res)).catch((err) => setErrorActivo(err))
-        getPasivo().then((res) => setPasivos(res)).catch((err) => setErrorPasivo(err))
+        getAllActivo()
+        getAllPasivo()
+        getAllPatrimonio()
     }
 
 
@@ -49,7 +69,7 @@ export default function Baseinicial() {
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTable cell={row} />
+                            <MenuTable cell={row} getAllActivo={getAllActivo}/>
                         ),
                     },
                 ],
@@ -59,10 +79,10 @@ export default function Baseinicial() {
         []
     );
 
-/*     const dataActivos =  React.useMemo(
-        () =>  [...activos],
-        []
-    ) ; */
+    const dataActivos = React.useMemo(
+        () => [...activos],
+        [activos]
+    );
     const columnsPasivos = React.useMemo(
         () => [
             {
@@ -83,7 +103,7 @@ export default function Baseinicial() {
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTablePasive cell={row} />
+                            <MenuTablePasive cell={row} getAllPasivo={getAllPasivo} />
                         ),
                     },
                 ],
@@ -93,10 +113,10 @@ export default function Baseinicial() {
         []
     );
 
-/*     const dataPasivos = React.useMemo(
-        () => pasivos.length > 0 ? [...pasivos] : [],
-        []
-    ); */
+    const dataPasivos = React.useMemo(
+        () => [...pasivos],
+        [pasivos]
+    );
 
     const columnsPatrimonio = React.useMemo(
         () => [
@@ -118,7 +138,7 @@ export default function Baseinicial() {
                             // Use Cell to render an expander for each row.
                             // We can use the getToggleRowExpandedProps prop-getter
                             // to build the expander.
-                            <MenuTablePatrimonio cell={row} />
+                            <MenuTablePatrimonio cell={row} getAllPatrimonio={getAllPatrimonio} />
                         ),
                     },
                 ],
@@ -128,29 +148,40 @@ export default function Baseinicial() {
         []
     );
 
- /*    const dataPatrimonio = React.useMemo(
-        () => patrimonio.length >  0 ? [...patrimonio] : [],
-        []
-    ); */
+    const dataPatrimonio = React.useMemo(
+        () => [...patrimonio],
+        [patrimonio]
+    );
 
 
     return (
         <Box as="section">
+
+            {
+                errorPatrimonio ? <Box>Error</Box> : null
+            }
+
+            {
+                errorActivo ? <Box>Error</Box> : null
+            }
+            {
+                errorPasivo ? <Box>Error</Box> : null
+            }
             <Box d="flex" marginY="2" justifyContent="flex-end">
-                <ModalFormBaseinicial getBaseInicial={getBaseInicial}/>
+                <ModalFormBaseinicial getBaseInicial={getBaseInicial} />
             </Box>
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                {activos.length > 0 ? <TablePagination columns={columnsActivos} data={activos} /> : <Text align="center">No tiene activos</Text>}
-
-            </Box>
-
-            <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                {pasivos.length > 0 ? <TablePagination columns={columnsPasivos} data={pasivos} /> : <Text align="center">No tiene patrimonio</Text>}
+                {activos.length > 0 ? <TablePagination columns={columnsActivos} data={dataActivos} /> : <Text align="center">No tiene activos</Text>}
 
             </Box>
 
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
-                {patrimonio.length > 0 ? <TablePagination columns={columnsPatrimonio} data={patrimonio} /> : <Text align="center">No tiene patrimonio</Text>}
+                {pasivos.length > 0 ? <TablePagination columns={columnsPasivos} data={dataPasivos} /> : <Text align="center">No tiene patrimonio</Text>}
+
+            </Box>
+
+            <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
+                {patrimonio.length > 0 ? <TablePagination columns={columnsPatrimonio} data={dataPatrimonio} /> : <Text align="center">No tiene patrimonio</Text>}
             </Box>
         </Box>
     );
