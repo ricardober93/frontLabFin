@@ -1,10 +1,46 @@
 import { DeleteIcon } from '@chakra-ui/icons'
-import { AlertDialog, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure } from '@chakra-ui/react'
+import { AlertDialog, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
+import { deletePasivoService } from 'pages/proyecciones/servicios/deletePasivo.Service'
 import React from 'react'
 
-export default function ModalDeletePasive({data}) {
+export default function ModalDeletePasive({data,getAllPasivo}: any) {
+  const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
+
+    const deletePasivo = () => {
+      deletePasivoService(
+        "/proyeccion/pasivo",
+        data.id).then((res) => {
+          if (res.status === 200) {
+  
+            setTimeout(() => {
+              toast({
+                title: "Activo eliminado",
+                description: 'se elimine e activo correctamente',
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              })
+            }, 100);
+            getAllPasivo()
+            onClose()
+          }
+  
+          if (res.status === 400) {
+            toast({
+              title: "error",
+              description: 'No se pudo eliminar el activo',
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
+          }
+  
+        })
+    }
+
+
     return (
         <>
         <MenuItem  onClick={onOpen} icon={<DeleteIcon color="red.400" />}>
@@ -27,7 +63,7 @@ export default function ModalDeletePasive({data}) {
              <Button ref={cancelRef} onClick={onClose}>
                No
              </Button>
-             <Button colorScheme="red" ml={3}>
+             <Button colorScheme="red" ml={3} onClick={deletePasivo}>
                Eliminar el activo {data.name}
              </Button>
            </AlertDialogFooter>
