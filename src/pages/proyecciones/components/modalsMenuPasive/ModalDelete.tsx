@@ -1,7 +1,8 @@
+import React from 'react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
-import { deletePasivoService } from 'pages/proyecciones/servicios/deletePasivo.Service'
-import React from 'react'
+import { AxiosResponse } from 'axios'
+import { deletePasivoService } from 'pages/proyecciones/servicios/baseInicial/deletePasivo.Service'
 
 export default function ModalDeletePasive({data,getAllPasivo}: any) {
   const toast = useToast()
@@ -11,7 +12,7 @@ export default function ModalDeletePasive({data,getAllPasivo}: any) {
     const deletePasivo = () => {
       deletePasivoService(
         "/proyeccion/pasivo",
-        data.id).then((res) => {
+        data.id).then((res:AxiosResponse) => {
           if (res.status === 200) {
   
             setTimeout(() => {

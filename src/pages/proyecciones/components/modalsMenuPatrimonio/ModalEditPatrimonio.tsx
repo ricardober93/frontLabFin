@@ -15,8 +15,9 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { AxiosResponse } from "axios";
 import AlertMessage from "component/AlertMessage";
-import { updatePatrimonioService } from "pages/proyecciones/servicios/updatePatrimonio.service";
+import { updatePatrimonioService } from "pages/proyecciones/servicios/baseInicial/updatePatrimonio.service";
 import React from "react";
 
 export default function ModalEditPatrimonio({ data, getAllPatrimonio }: any) {
@@ -31,7 +32,7 @@ export default function ModalEditPatrimonio({ data, getAllPatrimonio }: any) {
     updatePatrimonioService("/proyeccion/patrimonio", data.id, {
       name: newNamePatrimonio.current.value,
       valor: newValorPatrimonio.current.value,
-    }).then((res) => {
+    }).then((res: AxiosResponse) => {
       if (res.status === 200) {
         setTimeout(() => {
           toast({

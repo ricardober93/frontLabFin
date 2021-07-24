@@ -1,7 +1,8 @@
+import React from 'react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
-import { deleteActivoService } from 'pages/proyecciones/servicios/deleteActivo.service'
-import React from 'react'
+import { AxiosResponse } from 'axios';
+import { deleteActivoService } from 'pages/proyecciones/servicios/baseInicial/deleteActivo.service';
 
 export default function ModalDeleteActivo({ data , getAllActivo } : any) {
   const toast = useToast()
@@ -11,7 +12,7 @@ export default function ModalDeleteActivo({ data , getAllActivo } : any) {
   const DeleteActivo = () => {
     deleteActivoService(
       "/proyeccion/activo",
-      data.id).then((res) => {
+      data.id).then((res : AxiosResponse) => {
         if (res.status === 200) {
 
           setTimeout(() => {

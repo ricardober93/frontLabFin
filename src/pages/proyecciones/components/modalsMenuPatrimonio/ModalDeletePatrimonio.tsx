@@ -1,3 +1,4 @@
+import React from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
   AlertDialog,
@@ -11,8 +12,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { deletePatrimonioService } from "pages/proyecciones/servicios/deletePatrimonio.service";
-import React from "react";
+import { deletePatrimonioService } from "pages/proyecciones/servicios/baseInicial/deletePatrimonio.service";
+import { AxiosResponse } from "axios";
 
 export default function ModalDeletePatrimonio({ data, getAllPatrimonio }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -20,31 +21,33 @@ export default function ModalDeletePatrimonio({ data, getAllPatrimonio }: any) {
   const toast = useToast();
 
   const deletePatrimonio = () => {
-    deletePatrimonioService("/proyeccion/patrimonio", data.id).then((res) => {
-      if (res.status === 200) {
-        setTimeout(() => {
+    deletePatrimonioService("/proyeccion/patrimonio", data.id).then(
+      (res: AxiosResponse) => {
+        if (res.status === 200) {
+          setTimeout(() => {
+            toast({
+              title: "Activo eliminado",
+              description: "se elimine e activo correctamente",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            });
+          }, 100);
+          getAllPatrimonio();
+          onClose();
+        }
+
+        if (res.status === 400) {
           toast({
-            title: "Activo eliminado",
-            description: "se elimine e activo correctamente",
-            status: "success",
+            title: "error",
+            description: "No se pudo eliminar el activo",
+            status: "error",
             duration: 9000,
             isClosable: true,
           });
-        }, 100);
-        getAllPatrimonio();
-        onClose();
+        }
       }
-
-      if (res.status === 400) {
-        toast({
-          title: "error",
-          description: "No se pudo eliminar el activo",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-    });
+    );
   };
 
   return (

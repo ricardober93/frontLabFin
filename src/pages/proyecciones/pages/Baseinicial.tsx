@@ -5,9 +5,9 @@ import TablePagination from "../components/TablePaginations/TablePagination";
 import { MenuTable } from "../components/modalsMenuActive/MenuTable";
 import { MenuTablePasive } from "../components/modalsMenuPasive/MenuTablePasive";
 import { MenuTablePatrimonio } from "../components/modalsMenuPatrimonio/MenuTablePatrimonio";
-import { getPatrimonio } from "../servicios/patrominio.service";
-import { getActivo } from "../servicios/activo.service";
-import { getPasivo } from "../servicios/pasivo.service";
+import { getPatrimonio } from "../servicios/baseInicial/patrominio.service";
+import { getActivo } from "../servicios/baseInicial/activo.service";
+import { getPasivo } from "../servicios/baseInicial/pasivo.service";
 
 export default function Baseinicial() {
 

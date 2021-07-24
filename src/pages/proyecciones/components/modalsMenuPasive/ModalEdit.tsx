@@ -1,10 +1,11 @@
+import React, { useState } from 'react'
 import { EditIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
 import AlertMessage from 'component/AlertMessage'
-import { updatePasivoService } from 'pages/proyecciones/servicios/updatePasivo.Service'
-import React, { useState } from 'react'
+import { AxiosResponse } from 'axios'
+import { updatePasivoService } from 'pages/proyecciones/servicios/baseInicial/updatePasivo.Service'
 
-export default function ModalEditPasive({data,getAllPasivo}) {
+export default function ModalEditPasive({data,getAllPasivo}:any) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const newNamePasivo = React.useRef();
@@ -17,7 +18,7 @@ export default function ModalEditPasive({data,getAllPasivo}) {
       updatePasivoService("/proyeccion/pasivo", data.id, {
         name: newNamePasivo.current.value,
         valor: newValorPasivo.current.value,
-      }).then((res) => {
+      }).then((res: AxiosResponse) => {
         if (res.status === 200) {
           setTimeout(() => {
             toast({

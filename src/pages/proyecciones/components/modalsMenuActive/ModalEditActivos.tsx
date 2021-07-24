@@ -15,8 +15,9 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { AxiosResponse } from "axios";
 import AlertMessage from "component/AlertMessage";
-import { updateActivoService } from "pages/proyecciones/servicios/updateActivo.service";
+import { updateActivoService } from "pages/proyecciones/servicios/baseInicial/updateActivo.service";
 import React from "react";
 import { useState } from "react";
 
@@ -33,7 +34,7 @@ export default function ModalEditActivos({ data, getAllActivo }: any) {
     updateActivoService("/proyeccion/activo", data.id, {
       name: newName.current.value,
       valor: newValor.current.value,
-    }).then((res) => {
+    }).then((res : AxiosResponse) => {
       if (res.status === 200) {
         setTimeout(() => {
           toast({
