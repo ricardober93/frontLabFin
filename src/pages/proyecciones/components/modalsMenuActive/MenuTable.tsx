@@ -15,8 +15,8 @@ export const MenuTable = (cell: any) => {
                 variant="outline"
             />
             <MenuList>
-                 <ModalEditActivos  data={data}/>
-                <ModalDeleteActivo data={data} />
+                 <ModalEditActivos  data={data} getAllActivo={cell.getAllActivo}/>
+                <ModalDeleteActivo data={data} getAllActivo={cell.getAllActivo}/>
             </MenuList>
         </Menu>
     )

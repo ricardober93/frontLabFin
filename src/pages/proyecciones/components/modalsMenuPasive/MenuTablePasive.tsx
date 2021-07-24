@@ -15,8 +15,8 @@ export const MenuTablePasive = (cell: any) => {
                 variant="outline"
             />
             <MenuList>
-                 <ModalEditPasive  data={data}/>
-                <ModalDeletePasive data={data} />
+                 <ModalEditPasive  data={data} getAllPasivo={cell.getAllPasivo}/>
+                <ModalDeletePasive data={data} getAllPasivo={cell.getAllPasivo}/>
             </MenuList>
         </Menu>
     )

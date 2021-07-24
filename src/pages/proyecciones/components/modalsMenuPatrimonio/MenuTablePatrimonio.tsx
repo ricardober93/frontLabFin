@@ -15,8 +15,8 @@ export const MenuTablePatrimonio = (cell: any) => {
                 variant="outline"
             />
             <MenuList>
-                 <ModalEditPatrimonio  data={data}/>
-                <ModalDeletePatrimonio data={data} />
+                 <ModalEditPatrimonio  data={data} getAllPatrimonio={cell.getAllPatrimonio} />
+                <ModalDeletePatrimonio data={data} getAllPatrimonio={cell.getAllPatrimonio} />
             </MenuList>
         </Menu>
     )
