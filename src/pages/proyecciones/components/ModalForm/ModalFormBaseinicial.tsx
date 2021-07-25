@@ -58,10 +58,6 @@ export default function ModalFormBaseinicial({getBaseInicial}: any) {
     reValidateMode: "onChange",
   });
   const onSubmit = handleSubmit(async (d) => {
-    console.log(ActivosList);
-    console.log(PasivosList);
-    console.log(PatrimonioList);
-
     try {
       const res = await createBalance( "proyeccion/base-inicial" ,ActivosList, PasivosList, PatrimonioList);
       console.log(res)
