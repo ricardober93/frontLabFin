@@ -15,31 +15,50 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { AxiosError, AxiosResponse } from "axios";
+import { createProducto } from "pages/proyecciones/servicios/Productos/createProducto.service";
+import { Iproduct } from "pages/proyecciones/types/type";
 
-interface FormValues {
-  name: string;
-  quantity: number;
-  priceOnSale: number;
-  rateRaise: number;
-  rateCost: number;
-  rateOfSale: number;
-  rateOfPurchases: number;
-}
-
-export default function ModalFormProductos() {
+export default function ModalFormProductos({ getProductos }) {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<Iproduct>({
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<Iproduct> = (data) => {
     console.log(data);
+    createProducto("proyeccion/producto", data)
+      .then((res: AxiosResponse) => {
+        console.log(res)
+        if (res.status === 201) {
+          toast({
+            title: "Producto actualizado",
+            description: "se actualizo el producto correctamente",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          getProductos();
+          onClose();
+        }
+      })
+      .catch((error: AxiosError) => {
+        toast({
+          title: "Problemas para crear el producto",
+          description: "se produjo un error al producto",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   };
   return (
     <>
@@ -91,44 +110,43 @@ export default function ModalFormProductos() {
                   </FormControl>
 
                   <FormControl
-                    id="priceOnSale"
-                    isInvalid={errors.priceOnSale ? true : false}
+                    id="price"
+                    isInvalid={errors.price ? true : false}
                   >
                     <FormLabel>precio de venta del producto</FormLabel>
                     <Input
                       type="number"
-                      {...register("priceOnSale", {
+                      {...register("price", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.priceOnSale?.type === "required" &&
-                        "Es requerido"}
+                      {errors.price?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
                 </Box>
                 <Box w="50%">
                   <FormControl
-                    id="rateCost"
-                    isInvalid={errors.rateCost ? true : false}
+                    id="rate_cost"
+                    isInvalid={errors.rate_cost ? true : false}
                   >
                     <FormLabel>Porcentaje de costo del producto</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rateCost", {
+                      {...register("rate_cost", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rateCost?.type === "required" && "Es requerido"}
+                      {errors.rate_cost?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
                   <FormControl
-                    id="rateRaise"
-                    isInvalid={errors.rateRaise ? true : false}
+                    id="rate_raise"
+                    isInvalid={errors.rate_raise ? true : false}
                   >
                     <FormLabel>
                       Porcentaje de crecimiento del producto
@@ -137,18 +155,18 @@ export default function ModalFormProductos() {
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rateRaise", {
+                      {...register("rate_raise", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rateRaise?.type === "required" && "Es requerido"}
+                      {errors.rate_raise?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
                   <FormControl
-                    id="rateOfSale"
-                    isInvalid={errors.rateOfSale ? true : false}
+                    id="rate_of_sale"
+                    isInvalid={errors.rate_of_sale ? true : false}
                   >
                     <FormLabel>
                       Porcentaje de crecimiento del producto
@@ -157,30 +175,31 @@ export default function ModalFormProductos() {
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rateOfSale", {
+                      {...register("rate_of_sale", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rateOfSale?.type === "required" && "Es requerido"}
+                      {errors.rate_of_sale?.type === "required" &&
+                        "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
                   <FormControl
-                    id="rateOfPurchases"
-                    isInvalid={errors.rateOfPurchases ? true : false}
+                    id="rate_of_purchases"
+                    isInvalid={errors.rate_of_purchases ? true : false}
                   >
                     <FormLabel>Porcentaje de compra de contado</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rateOfPurchases", {
+                      {...register("rate_of_purchases", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rateOfPurchases?.type === "required" &&
+                      {errors.rate_of_purchases?.type === "required" &&
                         "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
