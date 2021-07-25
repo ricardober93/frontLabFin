@@ -1,10 +1,40 @@
-import React from "react";
-import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { Box, Button, Flex, Heading, Spacer, useToast } from "@chakra-ui/react";
 import ModalFormProductos from "../components/ModalForm/ModalFormProductos";
 import TablePagination from "../components/TablePaginations/TablePagination";
 import { MenuTableProducto } from "../components/modalsMenuProducto/MenuTableProductos";
+import { getAllProductos } from "../servicios/Productos/getProductos.service";
+import { AxiosError, AxiosResponse } from "axios";
+import AlertMessage from "component/AlertMessage";
 
 export default function Productos() {
+  const toast = useToast();
+  const [allproductos, setProductos] = React.useState([]);
+
+  useEffect(() => {
+    getProductos();
+  }, []);
+
+  const getProductos = () => {
+    getAllProductos("proyeccion/productos")
+      .then((res: AxiosResponse) => {
+        if (res.status === 200) {
+          setProductos(res.data);
+        }
+      })
+      .catch((err: AxiosError) => {
+        if (err) {
+          toast({
+            title: "Error.",
+            description: "No se ha podido conseguir los productos",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      });
+  };
+
   const columnsActivos = React.useMemo(
     () => [
       {
@@ -20,23 +50,23 @@ export default function Productos() {
           },
           {
             Header: "precio de venta del producto",
-            accessor: "priceOnSale",
+            accessor: "price",
           },
           {
             Header: "Porcentaje de costo del producto",
-            accessor: "rateCost",
+            accessor: "rate_cost",
           },
           {
             Header: "Porcentaje de crecimiento del producto",
-            accessor: "rateRaise",
+            accessor: "rate_raise",
           },
           {
-            Header: "Porcentaje de crecimiento del producto",
-            accessor: "rateOfSale",
+            Header: "Porcentaje de venta del producto",
+            accessor: "rate_of_sale",
           },
           {
             Header: "Porcentaje de compra de contado",
-            accessor: "rateOfPurchases",
+            accessor: "rate_of_purchases",
           },
           {
             Header: "Acciones",
@@ -45,7 +75,7 @@ export default function Productos() {
               // Use Cell to render an expander for each row.
               // We can use the getToggleRowExpandedProps prop-getter
               // to build the expander.
-              <MenuTableProducto cell={row} />
+              <MenuTableProducto cell={row} getProductos={getProductos} />
             ),
           },
         ],
@@ -54,173 +84,7 @@ export default function Productos() {
     []
   );
 
-  const dataActivos = React.useMemo(
-    () => [
-      {
-        name: "line",
-        quantity: "22",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-       },
-      {
-        name: "hola",
-        quantity: "20",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "sofia",
-        quantity: "25",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Doña",
-        quantity: "28",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Romero",
-        quantity: "26",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Solo",
-        quantity: "25",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "line",
-        quantity: "15",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "hola",
-        quantity: "12",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "sofia",
-        quantity: "7",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Doña",
-        quantity: "2",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Romero",
-        quantity: "1",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Solo",
-        quantity: "20",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "line",
-        quantity: "1",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "hola",
-        quantity: "2",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "sofia",
-        quantity: "30",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Doña",
-        quantity: "100",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Romero",
-        quantity: "20",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-      {
-        name: "Solo",
-        quantity: "100",
-        priceOnSale: 234,
-        rateCost:12,
-        rateRaise:45,
-        rateOfSale:23,
-        rateOfPurchases:34,
-      },
-    ],
-    []
-  );
+  const dataProductos = React.useMemo(() => [...allproductos], [allproductos]);
 
   return (
     <Box my="5">
@@ -237,7 +101,7 @@ export default function Productos() {
             >
               Proyeccion
             </Button>
-            <ModalFormProductos />
+            <ModalFormProductos getProductos={getProductos}/>
           </Flex>
         </Box>
       </Flex>
@@ -248,7 +112,15 @@ export default function Productos() {
         overflow="hidden"
         boxShadow="base"
       >
-        <TablePagination columns={columnsActivos} data={dataActivos} />
+        {dataProductos ? (
+          <TablePagination columns={columnsActivos} data={dataProductos} />
+        ) : (
+          <AlertMessage
+            status="error"
+            tittle="No hay Productos"
+            message="no hay productos creados"
+          />
+        )}
       </Box>
     </Box>
   );
