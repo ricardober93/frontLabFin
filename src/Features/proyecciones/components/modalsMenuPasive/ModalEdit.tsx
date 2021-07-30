@@ -3,7 +3,7 @@ import { EditIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
 import AlertMessage from 'component/AlertMessage'
 import { AxiosResponse } from 'axios'
-import { updatePasivoService } from 'pages/proyecciones/servicios/baseInicial/updatePasivo.Service'
+import { updatePasivoService } from 'Features/proyecciones/servicios/baseInicial/updatePasivo.Service'
 
 export default function ModalEditPasive({data,getAllPasivo}:any) {
     const { isOpen, onOpen, onClose } = useDisclosure()

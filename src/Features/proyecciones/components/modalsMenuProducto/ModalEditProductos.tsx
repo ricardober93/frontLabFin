@@ -18,8 +18,8 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { AxiosError, AxiosResponse } from "axios";
-import { updateProductoService } from "pages/proyecciones/servicios/Productos/updateProduct.service";
-import { Iproduct } from "pages/proyecciones/types/type";
+import { updateProductoService } from "Features/proyecciones/servicios/Productos/updateProduct.service";
+import { Iproduct } from "Features/proyecciones/types/type";
 import React from "react";
 
 interface Iprops {

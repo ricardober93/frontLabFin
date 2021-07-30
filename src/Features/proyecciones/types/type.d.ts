@@ -21,9 +21,11 @@ export interface Iactivos {
     price: number;
     quantity: number;
     rate_cost: number;
-    rate_of_purchases: number;
-    rate_of_sale: number;
+    price_cost: number;
+    inventary_final: number;
     rate_raise: number;
+    rate_of_sale: number;
+    rate_of_purchases: number;
 }
 
 

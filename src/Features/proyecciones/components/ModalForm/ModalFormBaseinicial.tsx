@@ -27,8 +27,8 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { createBalance } from "pages/proyecciones/servicios/baseInicial/createBalance.service";
-import { Iactivos, Ipasivos, Ipatrimonio } from "pages/proyecciones/types/type";
+import { createBalance } from "Features/proyecciones/servicios/baseInicial/createBalance.service";
+import { Iactivos, Ipasivos, Ipatrimonio } from "Features/proyecciones/types/type";
 
 
 
@@ -61,12 +61,7 @@ export default function ModalFormBaseinicial({getBaseInicial}: any) {
     try {
       const res = await createBalance( "proyeccion/base-inicial" ,ActivosList, PasivosList, PatrimonioList);
       console.log(res)
-      if (res.status === "error") {
-        setError(res.message)
-        return
-      }
-
-      if (res.status === "good") {
+      if (res.status === 200) {
         onClose()
         getBaseInicial()
         toast({

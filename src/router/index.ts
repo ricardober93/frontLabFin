@@ -1,17 +1,17 @@
-import Admin from "../pages/admin/Admin";
-import UserPages from "../pages/admin/pages/UserPages";
+import Admin from "../Features/admin/Admin";
+import UserPages from "../Features/admin/pages/UserPages";
 
 
-import LandingPage from "../pages/LandingPage/LandingPage";
+import LandingPage from "../Features/LandingPage/LandingPage";
 
-import Login from "../pages/login/Login";
-import Register from "../pages/register/Register";
+import Login from "../Features/Auth/login/Login";
+import Register from "../Features/Auth/register/Register";
 
-import { Proyeccion } from "../pages/proyecciones/Proyeccion";
-import Baseinicial from "pages/proyecciones/pages/Baseinicial";
-import Productos from "pages/proyecciones/pages/Productos";
-import Salario from "pages/proyecciones/pages/Salario";
-import VariablePage from "pages/proyecciones/pages/VariablePage";
+import { Proyeccion } from "../Features/proyecciones/Proyeccion";
+import Baseinicial from "Features/proyecciones/pages/Baseinicial";
+import Productos from "Features/proyecciones/pages/Productos";
+import Salario from "Features/proyecciones/pages/Salario";
+import VariablePage from "Features/proyecciones/pages/VariablePage";
 
 
 const routes = [

@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { AxiosResponse } from "axios";
 import AlertMessage from "component/AlertMessage";
-import { updatePatrimonioService } from "pages/proyecciones/servicios/baseInicial/updatePatrimonio.service";
+import { updatePatrimonioService } from "Features/proyecciones/servicios/baseInicial/updatePatrimonio.service";
 import React from "react";
 
 export default function ModalEditPatrimonio({ data, getAllPatrimonio }: any) {

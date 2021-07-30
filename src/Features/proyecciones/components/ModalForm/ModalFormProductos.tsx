@@ -19,10 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AxiosError, AxiosResponse } from "axios";
-import { createProducto } from "pages/proyecciones/servicios/Productos/createProducto.service";
-import { Iproduct } from "pages/proyecciones/types/type";
+import { createProducto } from "Features/proyecciones/servicios/Productos/createProducto.service";
+import { Iproduct } from "Features/proyecciones/types/type";
 
-export default function ModalFormProductos({ getProductos }) {
+export default function ModalFormProductos({ getProductos }: any) {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -127,20 +127,20 @@ export default function ModalFormProductos({ getProductos }) {
                 </Box>
                 <Box w="50%">
                   <FormControl
-                    id="rate_cost"
-                    isInvalid={errors.rate_cost ? true : false}
+                    id="inventary_final"
+                    isInvalid={errors.inventary_final ? true : false}
                   >
                     <FormLabel>Porcentaje de costo del producto</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rate_cost", {
+                      {...register("inventary_final", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rate_cost?.type === "required" && "Es requerido"}
+                      {errors.inventary_final?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 

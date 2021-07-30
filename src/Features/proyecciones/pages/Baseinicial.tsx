@@ -18,9 +18,6 @@ export default function Baseinicial() {
     const [errorPatrimonio, setErrorPatrimonio] = useState();
     const [errorActivo, setErrorActivo] = useState();
     const [errorPasivo, setErrorPasivo] = useState();
-    useEffect(() => {
-        getBaseInicial()
-    }, [])
 
     const getAllActivo = () => {
         getActivo("/proyeccion/activo")
@@ -47,6 +44,12 @@ export default function Baseinicial() {
         getAllPasivo()
         getAllPatrimonio()
     }
+
+    useEffect(() => {
+        getBaseInicial()
+    }, [])
+
+
 
 
     const columnsActivos = React.useMemo(
@@ -168,7 +171,7 @@ export default function Baseinicial() {
                 errorPasivo ? <Box>Error</Box> : null
             }
             <Box d="flex" marginY="2" justifyContent="flex-end">
-                <ModalFormBaseinicial getBaseInicial={getBaseInicial} />
+             { activos.length > 0 && pasivos.length > 0 && patrimonio.length > 0 ?  null : <ModalFormBaseinicial getBaseInicial={getBaseInicial} /> }   
             </Box>
             <Box my="5" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="base">
                 {activos.length > 0 ? <TablePagination columns={columnsActivos} data={dataActivos} /> : <Text align="center">No tiene activos</Text>}

@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError, AxiosResponse } from "axios";
-import { deleteProdcuctoService } from "pages/proyecciones/servicios/Productos/deleteProducto.service";
+import { deleteProdcuctoService } from "Features/proyecciones/servicios/Productos/deleteProducto.service";
 
 export default function ModalDeleteProducto({ data, getProductos }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -1,6 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
-const token = localStorage.getItem('token');
 
 export const getPasivo = (url : string) => {
   return axios

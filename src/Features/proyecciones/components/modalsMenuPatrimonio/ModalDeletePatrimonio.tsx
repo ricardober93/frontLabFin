@@ -12,7 +12,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { deletePatrimonioService } from "pages/proyecciones/servicios/baseInicial/deletePatrimonio.service";
+import { deletePatrimonioService } from "Features/proyecciones/servicios/baseInicial/deletePatrimonio.service";
 import { AxiosResponse } from "axios";
 
 export default function ModalDeletePatrimonio({ data, getAllPatrimonio }: any) {

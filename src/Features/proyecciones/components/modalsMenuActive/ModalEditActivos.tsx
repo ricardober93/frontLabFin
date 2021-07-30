@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { AxiosResponse } from "axios";
 import AlertMessage from "component/AlertMessage";
-import { updateActivoService } from "pages/proyecciones/servicios/baseInicial/updateActivo.service";
+import { updateActivoService } from "Features/proyecciones/servicios/baseInicial/updateActivo.service";
 import React from "react";
 import { useState } from "react";
 

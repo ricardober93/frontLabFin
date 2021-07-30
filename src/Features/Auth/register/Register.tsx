@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react';
-import MyApp from "../../component/layout/MyApp";
+import MyApp from "../../../component/layout/MyApp";
 import FormRegister from 'component/FormRegister/FormRegister';
 
 export default function Register() {
