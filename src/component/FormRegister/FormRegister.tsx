@@ -10,8 +10,9 @@ import {
   FormErrorMessage,
   Button,
   HStack,
+  useToast,
 } from "@chakra-ui/react";
-import { registerService } from "pages/register/register.service";
+import { registerService } from "Features/Auth/register/register.service";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -22,6 +23,7 @@ interface FormValues {
 }
 
 export default function FormRegister() {
+  const toast = useToast();
   const history = useHistory();
   const {
     register,
@@ -38,9 +40,30 @@ export default function FormRegister() {
       const res = await registerService(data.email, data.password);
       console.log(res);
       if (res.status === 200) {
+        setTimeout(() => {
+          toast({
+            title: "Cuenta creada con exito",
+            description: "tiene que esperar que le activen la cuenta",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        }, 100);
         history.push("/login");
       }
-    } catch (error) {}
+
+    } catch (error) {
+      console.log(error)
+      setTimeout(() => {
+        toast({
+          title: "No se pudo crear la cuenta",
+          description: error.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }, 100);
+    }
   };
   return (
     <Box

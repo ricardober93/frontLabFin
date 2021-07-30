@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { loginService } from "pages/login/login.service";
+import { loginService } from "Features/Auth/login/login.service";
 interface FormValues {
   email: string;
   password: string;
@@ -35,18 +35,8 @@ export default function FormLogin() {
 
     try {
       const res = await loginService(data.email, data.password);
-      if (res.status == 400) {
-        toast({
-          title: "Problemas con las credenciales.",
-          description: "No se ha podido loguear.",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-        return;
-      }
 
-      if (res.status == 200) {
+      if (res.status === 200) {
         setTimeout(() => {
           toast({
             title: "Cuenta logueado con exito",
