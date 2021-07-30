@@ -24,30 +24,28 @@ export default function ModalDeletePatrimonio({ data, getAllPatrimonio }: any) {
     deletePatrimonioService("/proyeccion/patrimonio", data.id).then(
       (res: AxiosResponse) => {
         if (res.status === 200) {
-          setTimeout(() => {
             toast({
-              title: "Activo eliminado",
-              description: "se elimine e activo correctamente",
+              title: "Pasivo eliminado",
+              description: "se elimine el pasivo correctamente",
               status: "success",
               duration: 9000,
               isClosable: true,
             });
-          }, 100);
           getAllPatrimonio();
           onClose();
         }
-
-        if (res.status === 400) {
-          toast({
-            title: "error",
-            description: "No se pudo eliminar el activo",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
       }
-    );
+    ).catch((error) =>{
+      if (error) {
+        toast({
+          title: "error",
+          description: "No se pudo eliminar el activo",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    });
   };
 
   return (

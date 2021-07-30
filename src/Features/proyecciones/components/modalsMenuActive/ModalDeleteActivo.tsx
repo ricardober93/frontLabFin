@@ -14,7 +14,6 @@ export default function ModalDeleteActivo({ data , getAllActivo } : any) {
       "/proyeccion/activo",
       data.id).then((res : AxiosResponse) => {
         if (res.status === 200) {
-
           setTimeout(() => {
             toast({
               title: "Activo eliminado",
@@ -28,7 +27,10 @@ export default function ModalDeleteActivo({ data , getAllActivo } : any) {
           onClose()
         }
 
-        if (res.status === 400) {
+    
+
+      }).catch( (error) => {
+        if (error) {
           toast({
             title: "error",
             description: 'No se pudo eliminar el activo',
@@ -37,7 +39,6 @@ export default function ModalDeleteActivo({ data , getAllActivo } : any) {
             isClosable: true,
           })
         }
-
       })
   }
 
