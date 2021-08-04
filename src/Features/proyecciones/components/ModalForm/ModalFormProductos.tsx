@@ -28,6 +28,7 @@ export default function ModalFormProductos({ getProductos }: any) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Iproduct>({
     mode: "onChange",
@@ -47,6 +48,7 @@ export default function ModalFormProductos({ getProductos }: any) {
             isClosable: true,
           });
           getProductos();
+          reset()
           onClose();
         }
       })
