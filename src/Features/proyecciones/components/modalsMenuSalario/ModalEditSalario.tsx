@@ -2,7 +2,7 @@ import { EditIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Checkbox, FormControl, FormLabel, Input, MenuItem, useDisclosure, Wrap, WrapItem } from '@chakra-ui/react'
 import React from 'react'
 
-export default function ModalEditSalario({ data }) {
+export default function ModalEditSalario({ data, getAllSalarios } : any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
   return (
