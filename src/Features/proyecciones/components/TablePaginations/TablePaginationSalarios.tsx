@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/icons";
 import { useTable, usePagination } from "react-table";
 
-export default function TablePaginationSalario({ columns, data }) {
+export default function TablePaginationSalario({ columns, data } : any) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -67,10 +67,9 @@ export default function TablePaginationSalario({ columns, data }) {
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell:any) => {
                   return (
-                    <Td {...cell.getCellProps()}isNumeric={cell.column?.isNumeric}> 
+                    <Td {...cell.getCellProps()} isNumeric={cell.column?.isNumeric}> 
                     {cell.render("Cell")} 
-                    {cell.column?.Header === 'Aux. Transporte' ? 'si': null }
-                    {cell.column?.Header === "Comision" ? 'si': null }   </Td>
+                   </Td>
                   );
                 })}
               </Tr>
