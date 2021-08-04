@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import ModalFormSalario from "../components/ModalForm/ModalFormSalario";
 import { MenuTableSalario } from "../components/modalsMenuSalario/MenuTableSalario";
 import TablePaginationSalario from "../components/TablePaginations/TablePaginationSalarios";
+import { Isalary } from "../types/type";
+import { getSalarios } from "../servicios/Salario/get.service";
 
 export default function Salario() {
+
+  const [salary, setSalary] = useState<Isalary[]>([])
+  const [error, setError] = useState()
+  const getAllSalarios = () => {
+    getSalarios("proyeccion/salarios")
+      .then((res) => setSalary(res.data))
+      .catch((err) => setError(err));
+  };
+
+  useEffect(() => {
+    getAllSalarios();
+  }, []);
+
     const columnsSalario = React.useMemo(
         () => [
           {
@@ -20,7 +35,7 @@ export default function Salario() {
               },
               {
                 Header: "Dias Trabajados",
-                accessor: "dayWorks",
+                accessor: "day_works",
               },
               {
                 Header: "% de Pension",
@@ -41,11 +56,11 @@ export default function Salario() {
               {
                 Header: "Acciones",
                 isNumeric: true,
-                Cell: ({ row, isNumeric = true }) => (
+                Cell: ({ row, isNumeric = true }:any) => (
                   // Use Cell to render an expander for each row.
                   // We can use the getToggleRowExpandedProps prop-getter
                   // to build the expander.
-                  <MenuTableSalario cell={row} />
+                  <MenuTableSalario cell={row} getAllSalarios={getAllSalarios} />
                 ),
               },
             ],
@@ -54,174 +69,7 @@ export default function Salario() {
         []
       );
     
-      const dataSalario = React.useMemo(
-        () => [
-          {
-            name: "line",
-            salary: "22",
-            dayWorks: "field",
-            pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "hola",
-            salary: "20",
-            dayWorks: "mundo",
-            pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "sofia",
-            salary: "25",
-            dayWorks: "Marcena",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Doña",
-            salary: "28",
-            dayWorks: "Lau",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Romero",
-            salary: "26",
-            dayWorks: "Homero",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Solo",
-            salary: "25",
-            dayWorks: "on the dark",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "line",
-            salary: "15",
-            dayWorks: "field",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "hola",
-            salary: "12",
-            dayWorks: "mundo",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "sofia",
-            salary: "7",
-            dayWorks: "Marcena",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Doña",
-            salary: "2",
-            dayWorks: "Lau",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Romero",
-            salary: "1",
-            dayWorks: "Homero",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Solo",
-            salary: "20",
-            dayWorks: "on the dark",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "line",
-            salary: "1",
-            dayWorks: "field",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "hola",
-            salary: "2",
-            dayWorks: "mundo",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "sofia",
-            salary: "30",
-            dayWorks: "Marcena",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Doña",
-            salary: "100",
-            dayWorks: "Lau",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Romero",
-            salary: "20",
-            dayWorks: "Homero",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-          {
-            name: "Solo",
-            salary: "100",
-            dayWorks: "on the dark",
-             pension: 24,
-            salud:24,
-            transport: true,
-            comision:true,
-          },
-        ],
-        []
-      );
-    
+    console.log(salary)
     return (
         <Box my="5">
         <Flex>
@@ -237,7 +85,7 @@ export default function Salario() {
               >
                 Proyeccion
               </Button>
-              <ModalFormSalario />
+              <ModalFormSalario getAllSalarios={getAllSalarios} />
             </Flex>
           </Box>
         </Flex>
@@ -248,7 +96,10 @@ export default function Salario() {
           overflow="hidden"
           boxShadow="base"
         >
-          <TablePaginationSalario columns={columnsSalario} data={dataSalario} />
+         {
+           salary ?  <TablePaginationSalario columns={columnsSalario} data={salary} /> : null
+         }
+         
         </Box>
       </Box>
     )
