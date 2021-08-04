@@ -15,8 +15,8 @@ export const MenuTableSalario = (cell: any) => {
                 variant="outline"
             />
             <MenuList>
-                 <ModalEditSalario  data={data}/>
-                <ModalDeleteSalario data={data} />
+                 <ModalEditSalario  data={data} getAllSalarios={cell.getAllSalarios} />
+                <ModalDeleteSalario data={data} getAllSalarios={cell.getAllSalarios} />
             </MenuList>
         </Menu>
     )
