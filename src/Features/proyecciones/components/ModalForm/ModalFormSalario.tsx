@@ -17,31 +17,54 @@ import {
   FormErrorMessage,
   HStack,
   Checkbox,
+  useToast
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Isalary } from "Features/proyecciones/types/type";
+import { createSalario } from "Features/proyecciones/servicios/Salario/create.service";
+import { AxiosError, AxiosResponse } from "axios";
 
-interface FormValues {
-  name: string;
-  salary: number;
-  DaysWorks: number;
-  ratePension: number;
-  rateSalud: number;
-  AuxTransport?: number;
-  Comision?: number;
-}
 
-export default function ModalFormSalario() {
+export default function ModalFormSalario({getAllSalarios}) {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<Isalary>({
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Isalary> = (data) => {
+    console.log(data)
+    createSalario("proyeccion/salario", data)
+      .then((res: AxiosResponse) => {
+        console.log(res)
+        if (res.status === 201) {
+          toast({
+            title: "Salario creado",
+            description: "se creado el Salario correctamente",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          getAllSalarios();
+          reset()
+          onClose();
+        }
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+        toast({
+          title: "Problemas para crear el Salario",
+          description: "se produjo un error al Salario",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   };
   return (
     <>
@@ -93,64 +116,64 @@ export default function ModalFormSalario() {
                   </FormControl>
 
                   <FormControl
-                    id="DaysWorks"
-                    isInvalid={errors.DaysWorks ? true : false}
+                    id="daysWorks"
+                    isInvalid={errors.daysWorks ? true : false}
                   >
-                    <FormLabel>pDias Trabajados</FormLabel>
+                    <FormLabel>Dias Trabajados</FormLabel>
                     <Input
                       type="number"
-                      {...register("DaysWorks", {
+                      {...register("daysWorks", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.DaysWorks?.type === "required" && "Es requerido"}
+                      {errors.daysWorks?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
                 </Box>
                 <Box w="50%">
                   <FormControl
-                    id="ratePension"
-                    isInvalid={errors.ratePension ? true : false}
+                    id="pension"
+                    isInvalid={errors.pension ? true : false}
                   >
                     <FormLabel>Porcentaje de Pensión</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("ratePension", {
+                      {...register("pension", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.ratePension?.type === "required" &&
+                      {errors.pension?.type === "required" &&
                         "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
                   <FormControl
-                    id="rateSalud"
-                    isInvalid={errors.rateSalud ? true : false}
+                    id="salud"
+                    isInvalid={errors.salud ? true : false}
                   >
                     <FormLabel>Porcentaje de Pensión</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("rateSalud", {
+                      {...register("salud", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.rateSalud?.type === "required" && "Es requerido"}
+                      {errors.salud?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
                   <HStack>
-                    <Checkbox {...register("AuxTransport")} value="true">
+                    <Checkbox {...register("transport")} value="true">
                       Auxilio de Transporte
                     </Checkbox>
-                    <Checkbox {...register("Comision")} value="true">
+                    <Checkbox {...register("comision")} value="true">
                       Comision
                     </Checkbox>
                   </HStack>
