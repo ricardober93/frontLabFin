@@ -29,3 +29,13 @@ export interface Iactivos {
 }
 
 
+export interface Isalary {
+  name: string;
+  salary: number;
+  daysWorks: number;
+  pension: number;
+  salud: number;
+  transport?: number;
+  comision?: number;
+}
+
