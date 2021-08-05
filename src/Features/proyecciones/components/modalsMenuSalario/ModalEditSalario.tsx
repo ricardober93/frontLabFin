@@ -1,10 +1,46 @@
 import { EditIcon } from '@chakra-ui/icons'
-import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Checkbox, FormControl, FormLabel, Input, MenuItem, useDisclosure, Wrap, WrapItem } from '@chakra-ui/react'
+import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Checkbox, FormControl, FormLabel, Input, MenuItem, useDisclosure, useToast, Wrap, WrapItem } from '@chakra-ui/react'
+import { AxiosError, AxiosResponse } from 'axios'
+import { updateSalario } from 'Features/proyecciones/servicios/Salario/update.service'
 import React from 'react'
 
 export default function ModalEditSalario({ data, getAllSalarios } : any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
+  const [salarioRef, setSalarioRef] = React.useState({});
+  const toast = useToast();
+  const onChangeSalario = (e: any) => {
+    setSalarioRef({ ...salarioRef, [e.target.name]: e.target.value });
+  };
+
+  const onClickUpdateSalario = () => {
+
+    updateSalario("proyeccion/salario", data.id, salarioRef)
+      .then((res: AxiosResponse) => {
+        if (res.status === 200) {
+          toast({
+            title: "Producto actualizado",
+            description: "se actualizo el producto correctamente",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          getAllSalarios();
+          onClose();
+        }
+      })
+      .catch((err: AxiosError) => {
+        if (err)
+          toast({
+            title: "Producto no actualizado",
+            description: "No se pudo actualizar el producto",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+      });
+  };
+
   return (
     <>
       <MenuItem onClick={onOpen} icon={<EditIcon color="yellow.400" />}>
@@ -31,6 +67,8 @@ export default function ModalEditSalario({ data, getAllSalarios } : any) {
                   <FormLabel>Nombre</FormLabel>
                   <Input
                     type="text"
+                    name="name"
+                    onChange={onChangeSalario}
                     defaultValue={data.name}
                   />
                 </FormControl>
@@ -40,6 +78,8 @@ export default function ModalEditSalario({ data, getAllSalarios } : any) {
                   <FormLabel>Salario</FormLabel>
                   <Input
                     type="text"
+                    name="salary"
+                    onChange={onChangeSalario}
                     defaultValue={data.salary}
                   />
                 </FormControl>
@@ -49,7 +89,9 @@ export default function ModalEditSalario({ data, getAllSalarios } : any) {
                   <FormLabel>Dias Trabajados</FormLabel>
                   <Input
                     type="text"
-                    defaultValue={data.dayWorks}
+                    name="dayWorks"
+                    onChange={onChangeSalario}
+                    defaultValue={data.day_works}
                   />
                 </FormControl>
               </WrapItem>
@@ -58,6 +100,8 @@ export default function ModalEditSalario({ data, getAllSalarios } : any) {
                   <FormLabel>Porcentaje de Pension</FormLabel>
                   <Input
                     type="text"
+                    name="pension"
+                    onChange={onChangeSalario}
                     defaultValue={data.pension}
                   />
                 </FormControl>
@@ -67,36 +111,33 @@ export default function ModalEditSalario({ data, getAllSalarios } : any) {
                   <FormLabel>Porcentaje de salud</FormLabel>
                   <Input
                     type="text"
+                    name="salud"
+                    onChange={onChangeSalario}
                     defaultValue={data.salud}
                   />
                 </FormControl>
               </WrapItem>
               <WrapItem>
-                <Checkbox   defaultIsChecked={data.transport}>
+                <Checkbox name="transport"
+                    onChange={onChangeSalario}  defaultIsChecked={data.transport}>
                   Auxilio de Transporte
                 </Checkbox>
               </WrapItem>
               <WrapItem>
-                <Checkbox defaultIsChecked={data.comision}>
+                <Checkbox name="comision"
+                    onChange={onChangeSalario} defaultIsChecked={data.comision}>
                   Comision
                 </Checkbox>
               </WrapItem>
             </Wrap>
-
-
-
-
-
-
-
 
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
               No
             </Button>
-            <Button colorScheme="red" ml={3}>
-              Yes
+            <Button colorScheme="red" ml={3} onClick={onClickUpdateSalario}>
+              Actualizar {data.name}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
