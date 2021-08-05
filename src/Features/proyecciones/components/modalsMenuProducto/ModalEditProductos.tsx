@@ -37,7 +37,6 @@ export default function ModalEditProducto({ data, getProductos }: Iprops) {
   };
 
   const updateProduct = () => {
-    console.log(productRef);
     updateProductoService("proyeccion/producto", data.id, productRef)
       .then((res: AxiosResponse) => {
         if (res.status === 200) {
