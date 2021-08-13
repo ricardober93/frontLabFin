@@ -10,37 +10,56 @@ import {
   ModalCloseButton,
   useDisclosure,
   Input,
-  Box,
   Flex,
   FormControl,
   FormLabel,
   FormErrorMessage,
-  HStack,
-  Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Ivariable } from "Features/proyecciones/types/type";
+import { AxiosError, AxiosResponse } from "axios";
+import { createVariable } from "Features/proyecciones/servicios/variable/create.service";
 
-interface FormValues {
-  name: string;
-  salary: number;
-  DaysWorks: number;
-  ratePension: number;
-  rateSalud: number;
-  AuxTransport?: number;
-  Comision?: number;
-}
-export default function ModalFormVariable() {
+export default function ModalFormVariable({ getAllVariable }) {
+  const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
-    } = useForm<FormValues>({
+    } = useForm<Ivariable>({
       mode: "onChange",
       reValidateMode: "onChange",
     });
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const onSubmit: SubmitHandler<Ivariable> = (data) => {
       console.log(data);
+      createVariable("proyeccion/variable", data)
+        .then((res: AxiosResponse) => {
+          console.log(res)
+          if (res.status === 201) {
+            toast({
+              title: "Varaible actualizada",
+              description: "se actualizo el Varaible correctamente",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            });
+            getAllVariable();
+            reset()
+            onClose();
+          }
+        })
+        .catch((error: AxiosError) => {
+          toast({
+            title: "Problemas para crear la varaible",
+            description: "se produjo un error al crear la varaible",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        });
     };
     return (
       <>
@@ -60,10 +79,10 @@ export default function ModalFormVariable() {
               <ModalHeader> Agregar Variable</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Flex gridGap="5">
-                  <Box w="50%">
+                <Flex gridGap="5" >
+           
                     <FormControl id="name" isInvalid={errors.name ? true : false}>
-                      <FormLabel>Nombre del cargo</FormLabel>
+                      <FormLabel>Nombre de la varaible</FormLabel>
                       <Input
                         type="text"
                         {...register("name", {
@@ -74,91 +93,28 @@ export default function ModalFormVariable() {
                         {errors.name?.type === "required" && "Es requerido"}
                       </FormErrorMessage>
                     </FormControl>
-  
+                        
                     <FormControl
-                      id="salary"
-                      isInvalid={errors.salary ? true : false}
+                      id="value"
+                      isInvalid={errors.value ? true : false}
                     >
-                      <FormLabel>Salario</FormLabel>
+                      <FormLabel>valor de la variable</FormLabel>
                       <Input
                         type="number"
-                        {...register("salary", {
+                        {...register("value", {
                           required: true,
                         })}
                       />
                       <FormErrorMessage>
-                        {errors.salary?.type === "required" && "Es requerido"}
+                        {errors.value?.type === "required" && "Es requerido"}
                       </FormErrorMessage>
                     </FormControl>
-  
-                    <FormControl
-                      id="DaysWorks"
-                      isInvalid={errors.DaysWorks ? true : false}
-                    >
-                      <FormLabel>pDias Trabajados</FormLabel>
-                      <Input
-                        type="number"
-                        {...register("DaysWorks", {
-                          required: true,
-                        })}
-                      />
-                      <FormErrorMessage>
-                        {errors.DaysWorks?.type === "required" && "Es requerido"}
-                      </FormErrorMessage>
-                    </FormControl>
-                  </Box>
-                  <Box w="50%">
-                    <FormControl
-                      id="ratePension"
-                      isInvalid={errors.ratePension ? true : false}
-                    >
-                      <FormLabel>Porcentaje de Pensión</FormLabel>
-                      <Input
-                        type="number"
-                        min="0"
-                        max="100"
-                        {...register("ratePension", {
-                          required: true,
-                        })}
-                      />
-                      <FormErrorMessage>
-                        {errors.ratePension?.type === "required" &&
-                          "Es requerido"}
-                      </FormErrorMessage>
-                    </FormControl>
-  
-                    <FormControl
-                      id="rateSalud"
-                      isInvalid={errors.rateSalud ? true : false}
-                    >
-                      <FormLabel>Porcentaje de Pensión</FormLabel>
-                      <Input
-                        type="number"
-                        min="0"
-                        max="100"
-                        {...register("rateSalud", {
-                          required: true,
-                        })}
-                      />
-                      <FormErrorMessage>
-                        {errors.rateSalud?.type === "required" && "Es requerido"}
-                      </FormErrorMessage>
-                    </FormControl>
-  
-                    <HStack>
-                      <Checkbox {...register("AuxTransport")} value="true">
-                        Auxilio de Transporte
-                      </Checkbox>
-                      <Checkbox {...register("Comision")} value="true">
-                        Comision
-                      </Checkbox>
-                    </HStack>
-                  </Box>
+          
                 </Flex>
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="red" mr={3} onClick={onClose}>
-                  Close
+                  Cerrar
                 </Button>
                 <Button variant="ghost" type="submit">
                   Enviar
