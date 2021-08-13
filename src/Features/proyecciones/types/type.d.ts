@@ -39,3 +39,8 @@ export interface Isalary {
   comision?: number;
 }
 
+export interface Ivariable {
+  name: string;
+  value: number;
+}
+
