@@ -69,7 +69,6 @@ export default function Salario() {
         []
       );
     
-    console.log(salary)
     return (
         <Box my="5">
         <Flex>
