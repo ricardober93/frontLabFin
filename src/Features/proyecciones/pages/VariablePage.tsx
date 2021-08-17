@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { MenuTable } from "../components/modalsMenuActive/MenuTable";
 import TablePagination from "../components/TablePaginations/TablePagination";
 import ModalFormVariable from '../components/ModalForm/ModalFormVariable';
 import { getVariable } from '../servicios/variable/get.service';
 import AlertMessage from 'component/AlertMessage';
+import MenuTableVariable from '../components/modalsMenuVariables/MenuTableVariable';
 
 export default function VariablePage() {
 
@@ -29,10 +29,6 @@ export default function VariablePage() {
             accessor: "name",
           },
           {
-            Header: "Cantidad",
-            accessor: "quantity",
-          },
-          {
             Header: "Valor",
             accessor: "value",
           },
@@ -43,7 +39,9 @@ export default function VariablePage() {
               // Use Cell to render an expander for each row.
               // We can use the getToggleRowExpandedProps prop-getter
               // to build the expander.
-              <MenuTable cell={row} getAllVariable={getAllVariable} />
+              <MenuTableVariable
+                cell={row}
+                getAllVariable={getAllVariable} />
             ),
           },
         ],
@@ -54,6 +52,9 @@ export default function VariablePage() {
 
   return (
     <Box my="5">
+      {
+        error ? error : null
+      }
       <Flex>
         <Heading>Variable</Heading>
         <Spacer />
