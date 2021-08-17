@@ -4,11 +4,12 @@ import { IconButton, Menu, MenuButton, MenuList } from '@chakra-ui/react'
 import ModalDeleteVaraible from './ModalDeleteVaraible'
 import ModalEditVaraible from './ModalEditVariable'
 interface Props {
-  cell:any
+  cell: any,
+  getAllVariable: () => void
 }
 
-export default function MenuTableVariable({cell}: Props): ReactElement {
-  const data = cell.cell.original
+export default function MenuTableVariable( cell: Props): ReactElement {
+  const data = cell?.cell.original
   return (
     <Menu>
       <MenuButton
@@ -18,8 +19,12 @@ export default function MenuTableVariable({cell}: Props): ReactElement {
         variant="outline"
       />
       <MenuList>
-        <ModalEditVaraible data={data} getAllVariable={cell.getAllVariable} />
-        <ModalDeleteVaraible data={data} getAllVariable={cell.getAllVariable} />
+        <ModalEditVaraible
+          data={data}
+          getAllVariable={cell.getAllVariable} />
+        <ModalDeleteVaraible
+          data={data}
+          getAllVariable={cell.getAllVariable} />
       </MenuList>
     </Menu>
   )
