@@ -70,7 +70,10 @@ export default function Salario() {
       );
     
     return (
-        <Box my="5">
+      <Box my="5">
+        {
+          error ? error : null
+        }
         <Flex>
           <Heading>Salario</Heading>
           <Spacer />
