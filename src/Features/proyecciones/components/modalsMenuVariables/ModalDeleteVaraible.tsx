@@ -59,7 +59,7 @@ export default function ModalDeleteVaraible({ data, getAllSalarios }: any) {
               No
             </Button>
             <Button colorScheme="red" ml={3} onClick={onClickDeleteSalario} >
-              Eliminar el activo {data.name}
+              Eliminar el activo {data?.name}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

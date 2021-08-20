@@ -129,20 +129,20 @@ export default function ModalFormProductos({ getProductos }: any) {
                 </Box>
                 <Box w="50%">
                   <FormControl
-                    id="inventary_final"
-                    isInvalid={errors.inventary_final ? true : false}
+                    id="rate_cost"
+                    isInvalid={errors.rate_cost ? true : false}
                   >
                     <FormLabel>Porcentaje de costo del producto</FormLabel>
                     <Input
                       type="number"
                       min="0"
                       max="100"
-                      {...register("inventary_final", {
+                      {...register("rate_cost", {
                         required: true,
                       })}
                     />
                     <FormErrorMessage>
-                      {errors.inventary_final?.type === "required" && "Es requerido"}
+                      {errors.rate_cost?.type === "required" && "Es requerido"}
                     </FormErrorMessage>
                   </FormControl>
 
