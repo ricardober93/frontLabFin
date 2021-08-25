@@ -53,7 +53,11 @@ export default function VariablePage() {
   return (
     <Box my="5">
       {
-        error ? error : null
+        error ? <AlertMessage
+          status="error"
+          tittle="No hay Variables"
+          message="no hay varaibles creados"
+        /> : null
       }
       <Flex>
         <Heading>Variable</Heading>
@@ -82,11 +86,7 @@ export default function VariablePage() {
         {allVariables ? (
           <TablePagination columns={columnsVariable} data={allVariables} />
         ) : (
-          <AlertMessage
-            status="error"
-            tittle="No hay Variables"
-            message="no hay varaibles creados"
-          />
+          null
         )}
 
       </Box>
