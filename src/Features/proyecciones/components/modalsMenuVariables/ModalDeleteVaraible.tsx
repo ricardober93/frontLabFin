@@ -1,7 +1,7 @@
 import { DeleteIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure, useToast } from '@chakra-ui/react'
 import { AxiosError, AxiosResponse } from 'axios'
-import { deleteSalario } from 'Features/proyecciones/servicios/Salario/delete.service'
+import { deleteVariable } from 'Features/proyecciones/servicios/variable/delete.servicio'
 import React from 'react'
 
 export default function ModalDeleteVaraible({ data, getAllSalarios }: any) {
@@ -10,12 +10,12 @@ export default function ModalDeleteVaraible({ data, getAllSalarios }: any) {
   const cancelRef = React.useRef()
 
   const onClickDeleteSalario = () => {
-    deleteSalario("proyeccion/salario", data.id).then(
+    deleteVariable("proyeccion/otherVariable", data.id).then(
       (res: AxiosResponse) => {
         if (res.status === 200) {
           toast({
-            title: "Producto eliminado",
-            description: "se elimino el producto correctamente",
+            title: "Variable eliminado",
+            description: "se elimino la otras variable correctamente",
             status: "success",
             duration: 9000,
             isClosable: true,
@@ -28,7 +28,7 @@ export default function ModalDeleteVaraible({ data, getAllSalarios }: any) {
       if (error) {
         toast({
           title: "Error",
-          description: "se produjo un error al eliminar el producto",
+          description: "se produjo un error al eliminar la variable",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -59,7 +59,7 @@ export default function ModalDeleteVaraible({ data, getAllSalarios }: any) {
               No
             </Button>
             <Button colorScheme="red" ml={3} onClick={onClickDeleteSalario} >
-              Eliminar el activo {data?.name}
+              Eliminar la variable {data?.name}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
