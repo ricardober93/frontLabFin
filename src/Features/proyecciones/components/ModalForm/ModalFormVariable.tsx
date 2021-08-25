@@ -21,7 +21,7 @@ import { Ivariable } from "Features/proyecciones/types/type";
 import { AxiosError, AxiosResponse } from "axios";
 import { createVariable } from "Features/proyecciones/servicios/variable/create.service";
 
-export default function ModalFormVariable({ getAllVariable }) {
+export default function ModalFormVariable({ getAllVariable }: any) {
   const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const {
