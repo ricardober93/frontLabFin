@@ -12,6 +12,7 @@ import Baseinicial from "Features/proyecciones/pages/Baseinicial";
 import Productos from "Features/proyecciones/pages/Productos";
 import Salario from "Features/proyecciones/pages/Salario";
 import VariablePage from "Features/proyecciones/pages/VariablePage";
+import OtherVariables from "Features/proyecciones/pages/OtherVariables";
 
 
 const routes = [
@@ -53,6 +54,11 @@ const routes = [
                 path: "/app/proyecciones/Variable",
                 name: "variable",
                 component: VariablePage
+            },
+            {
+                path: "/app/proyecciones/otherVariable",
+                name: "otherVariable",
+                component: OtherVariables
             },
         ]
     },
